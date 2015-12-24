@@ -12,15 +12,6 @@
 int main(){
     auto start = system_clock::now();
 
-    vC f(N); //時間発展用波動関数
-    vvC A(EN_real, vC(N));
-
-    //順方向Fourier変換
-    fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_FORWARD, FFTW_MEASURE);
-
-    //逆方向
-    fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_BACKWARD, FFTW_MEASURE);
-
     printf("---- calculation parameters ----\n");
     printf("system size : \t [%.1f, %.1f]\n", X_BEGIN, X_END);
     printf("partition number : N = %d\n", N);
@@ -34,27 +25,10 @@ int main(){
     ofs.open("params.txt");
     ofs << "T = " << T_END << endl;
     ofs << "N = " << N << endl;
-    ofs.close();    
+    ofs.close();
 
-    init(f); //初期化
-    
-    for (int i = 0; i <= TN; i++){
-        //実部のみで振る
-        for (int j = 0; j < EN_real; j++){
-            for (int k = 0; k < N; k++){
-                A[j][k] += f[k] * polar(dt, i2E(E_BEGIN_real, j, dE_real) * (i * dt));
-            }
-        }
-
-        //時間発展
-        timeEvolution(f, plan_for, plan_back);
-    }
-
-    for (int i = 0; i < EN_real; i++){
-        for (int j = 0; j < N; j++){
-            A[i][j] /= T_END;
-        }
-    }
+    vector<double> res_real(EN_real); //結果格納用配列(実部)
+    energyReal(res_real); //エネルギー固有値の実部を求める
 
     ofs.open("./output/energy_peak_real.txt");
     if (!ofs){
@@ -62,10 +36,8 @@ int main(){
         exit(1);
     }
 
-    vector<double> res_real(EN_real); //結果格納用配列(実部)
     ofs << scientific;
     for (int i = 0; i < EN_real; i++){
-        res_real[i] = simpson(A[i]);
         ofs << i2E(E_BEGIN_real, i, dE_real) << "\t";
         ofs << res_real[i] << endl;
     }
@@ -73,8 +45,7 @@ int main(){
     ofs.close();
 
     vector<pair<double, int>> peak; //ピーク位置格納用配列
-
-    getPeaks(peak, res_real); //固有値のピークの探索(実部)
+        getPeaks(peak, res_real); //固有値のピークの探索(実部)
 
     int peakNum = peak.size(); //得られたピーク数
 
@@ -88,53 +59,53 @@ int main(){
     }
     ofs.close();
 
-    init(f); //再初期化
+    //init(f); //再初期化
 
-    vvvC B(EN_imag, vvC(peakNum, vC(N)));
+    //vvvC B(EN_imag, vvC(peakNum, vC(N)));
 
-    for (int i = 0; i <= TN; i++){
-        //虚部のみで振る
-        for (int j = 0; j < EN_imag; j++){
-            for (int k = 0; k < peakNum; k++){
-                for (int l = 0; l < N; l++){
-                    B[j][k][l] += f[l] * polar(dt, i2E(E_BEGIN_real, peak[k].second, dE_real) * (i * dt)) * exp(i2E(E_BEGIN_imag, j, dE_imag) * (i * dt));
-                }
-            }
-        }
+    //for (int i = 0; i <= TN; i++){
+    //    //虚部のみで振る
+    //    for (int j = 0; j < EN_imag; j++){
+    //        for (int k = 0; k < peakNum; k++){
+    //            for (int l = 0; l < N; l++){
+    //                B[j][k][l] += f[l] * polar(dt, i2E(E_BEGIN_real, peak[k].second, dE_real) * (i * dt)) * exp(i2E(E_BEGIN_imag, j, dE_imag) * (i * dt));
+    //            }
+    //        }
+    //    }
 
-        //時間発展
-        timeEvolution(f, plan_for, plan_back);
-    }
+    //    //時間発展
+    //    timeEvolution(f, plan_for, plan_back);
+    //}
 
-    for (int i = 0; i < EN_imag; i++){
-        for (int j = 0; j < peakNum; j++){
-            for (int k = 0; k < N; k++){
-                B[i][j][k] *= exp(-i2E(E_BEGIN_imag, i, dE_imag) * T_END) / T_END;
-            }
-        }
-    }
+    //for (int i = 0; i < EN_imag; i++){
+    //    for (int j = 0; j < peakNum; j++){
+    //        for (int k = 0; k < N; k++){
+    //            B[i][j][k] *= exp(-i2E(E_BEGIN_imag, i, dE_imag) * T_END) / T_END;
+    //        }
+    //    }
+    //}
 
-    vector<vector<double>> res_imag(EN_imag, vector<double>(peakNum));
-    for (int i = 0; i < EN_imag; i++){
-        for (int j = 0; j < peakNum; j++){
-            res_imag[i][j] = simpson(B[i][j]);
-        }
-    }
+    //vector<vector<double>> res_imag(EN_imag, vector<double>(peakNum));
+    //for (int i = 0; i < EN_imag; i++){
+    //    for (int j = 0; j < peakNum; j++){
+    //        res_imag[i][j] = simpson(B[i][j]);
+    //    }
+    //}
 
-    ofs.open("./output/energy_imag.txt");
-    if (!ofs){
-        cerr << "file open error!" << endl;
-        exit(1);
-    }
+    //ofs.open("./output/energy_imag.txt");
+    //if (!ofs){
+    //    cerr << "file open error!" << endl;
+    //    exit(1);
+    //}
 
-    ofs << scientific;
-    for (int i = 0; i < EN_imag; i++){
-        ofs << i2E(E_BEGIN_imag, i, dE_imag) << "\t";
-        for (int j = 0; j < peakNum; j++){
-            ofs << res_imag[i][j] << "\t";
-        }
-        ofs << endl;
-    }
+    //ofs << scientific;
+    //for (int i = 0; i < EN_imag; i++){
+    //    ofs << i2E(E_BEGIN_imag, i, dE_imag) << "\t";
+    //    for (int j = 0; j < peakNum; j++){
+    //        ofs << res_imag[i][j] << "\t";
+    //    }
+    //    ofs << endl;
+    //}
 
     /*
     vvC phi(2, vC(N));
@@ -197,9 +168,6 @@ int main(){
     fclose(fp);
 
     */
-
-    fftw_destroy_plan(plan_for);
-    fftw_destroy_plan(plan_back);
 
     auto end = system_clock::now();
     auto dur = end - start;

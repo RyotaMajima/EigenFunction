@@ -2,6 +2,41 @@
 #include "define.h"
 #include "common.h"
 
+void energyReal(vector<double> &res){
+    vC f(N);
+    vvC A(EN_real, vC(N));
+
+    fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_FORWARD, FFTW_MEASURE);
+    fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_BACKWARD, FFTW_MEASURE);
+
+    init(f);
+
+    for (int i = 0; i <= TN; i++){
+        //実部のみで振る
+        for (int j = 0; j < EN_real; j++){
+            for (int k = 0; k < N; k++){
+                A[j][k] += f[k] * polar(dt, i2E(E_BEGIN_real, j, dE_real) * (i * dt));
+            }
+        }
+
+        //時間発展
+        timeEvolution(f, plan_for, plan_back);
+    }
+
+    for (int i = 0; i < EN_real; i++){
+        for (int j = 0; j < N; j++){
+            A[i][j] /= T_END;
+        }
+    }
+
+    for (int i = 0; i < EN_real; i++){
+        res[i] = simpson(A[i]);
+    }
+
+    fftw_destroy_plan(plan_for);
+    fftw_destroy_plan(plan_back);
+}
+
 void getPeaks(vector<pair<double, int>> &peak, vector<double> &res){
     //微分値が正から負に変わったところの値とインデックス
     for (int i = 1; i < EN_real; i++){
