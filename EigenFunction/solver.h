@@ -37,6 +37,47 @@ void energyReal(vector<double> &res){
     fftw_destroy_plan(plan_back);
 }
 
+void energyImag(vector<vector<double>> &res, vector<pair<double, int>> &peak){
+    vC f(N);
+    vvvC B(EN_imag, vvC(peak.size(), vC(N)));
+
+    fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_FORWARD, FFTW_MEASURE);
+    fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_BACKWARD, FFTW_MEASURE);
+
+    init(f);
+
+    for (int i = 0; i <= TN; i++){
+        //虚部のみで振る
+        for (int j = 0; j < EN_imag; j++){
+            for (int k = 0; k < peak.size(); k++){
+                for (int l = 0; l < N; l++){
+                    B[j][k][l] += f[l] * polar(dt, i2E(E_BEGIN_real, peak[k].second, dE_real) * (i * dt)) * exp(i2E(E_BEGIN_imag, j, dE_imag) * (i * dt));
+                }
+            }
+        }
+
+        //時間発展
+        timeEvolution(f, plan_for, plan_back);
+    }
+
+    for (int i = 0; i < EN_imag; i++){
+        for (int j = 0; j < peak.size(); j++){
+            for (int k = 0; k < N; k++){
+                B[i][j][k] *= exp(-i2E(E_BEGIN_imag, i, dE_imag) * T_END) / T_END;
+            }
+        }
+    }
+
+    for (int i = 0; i < EN_imag; i++){
+        for (int j = 0; j < peak.size(); j++){
+            res[i][j] = simpson(B[i][j]);
+        }
+    }
+
+    fftw_destroy_plan(plan_for);
+    fftw_destroy_plan(plan_back);
+}
+
 void getPeaks(vector<pair<double, int>> &peak, vector<double> &res){
     //微分値が正から負に変わったところの値とインデックス
     for (int i = 1; i < EN_real; i++){

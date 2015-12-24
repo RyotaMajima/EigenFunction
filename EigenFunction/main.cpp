@@ -45,67 +45,35 @@ int main(){
     ofs.close();
 
     vector<pair<double, int>> peak; //ピーク位置格納用配列
-        getPeaks(peak, res_real); //固有値のピークの探索(実部)
-
-    int peakNum = peak.size(); //得られたピーク数
+    getPeaks(peak, res_real); //固有値のピークの探索(実部)
 
     //gnuplot用追加書き込み
     ofs.open("params.txt", ios_base::app);
-    ofs << "peakNum = " << peakNum << endl;
+    ofs << "peakNum = " << peak.size() << endl;
     ofs << fixed;
-    for (int i = 0; i < peakNum; i++){
+    for (int i = 0; i < peak.size(); i++){
         ofs << "ER" << i << " = " << i2E(E_BEGIN_real, peak[i].second, dE_real) << endl;
         ofs << "ER" << i << "_val = " << peak[i].first << endl;
     }
     ofs.close();
 
-    //init(f); //再初期化
+    vector<vector<double>> res_imag(EN_imag, vector<double>(peak.size()));
+    energyImag(res_imag, peak);
 
-    //vvvC B(EN_imag, vvC(peakNum, vC(N)));
+    ofs.open("./output/energy_imag.txt");
+    if (!ofs){
+        cerr << "file open error!" << endl;
+        exit(1);
+    }
 
-    //for (int i = 0; i <= TN; i++){
-    //    //虚部のみで振る
-    //    for (int j = 0; j < EN_imag; j++){
-    //        for (int k = 0; k < peakNum; k++){
-    //            for (int l = 0; l < N; l++){
-    //                B[j][k][l] += f[l] * polar(dt, i2E(E_BEGIN_real, peak[k].second, dE_real) * (i * dt)) * exp(i2E(E_BEGIN_imag, j, dE_imag) * (i * dt));
-    //            }
-    //        }
-    //    }
-
-    //    //時間発展
-    //    timeEvolution(f, plan_for, plan_back);
-    //}
-
-    //for (int i = 0; i < EN_imag; i++){
-    //    for (int j = 0; j < peakNum; j++){
-    //        for (int k = 0; k < N; k++){
-    //            B[i][j][k] *= exp(-i2E(E_BEGIN_imag, i, dE_imag) * T_END) / T_END;
-    //        }
-    //    }
-    //}
-
-    //vector<vector<double>> res_imag(EN_imag, vector<double>(peakNum));
-    //for (int i = 0; i < EN_imag; i++){
-    //    for (int j = 0; j < peakNum; j++){
-    //        res_imag[i][j] = simpson(B[i][j]);
-    //    }
-    //}
-
-    //ofs.open("./output/energy_imag.txt");
-    //if (!ofs){
-    //    cerr << "file open error!" << endl;
-    //    exit(1);
-    //}
-
-    //ofs << scientific;
-    //for (int i = 0; i < EN_imag; i++){
-    //    ofs << i2E(E_BEGIN_imag, i, dE_imag) << "\t";
-    //    for (int j = 0; j < peakNum; j++){
-    //        ofs << res_imag[i][j] << "\t";
-    //    }
-    //    ofs << endl;
-    //}
+    ofs << scientific;
+    for (int i = 0; i < EN_imag; i++){
+        ofs << i2E(E_BEGIN_imag, i, dE_imag) << "\t";
+        for (int j = 0; j < peak.size(); j++){
+            ofs << res_imag[i][j] << "\t";
+        }
+        ofs << endl;
+    }
 
     /*
     vvC phi(2, vC(N));
