@@ -44,7 +44,7 @@ int main(){
 
     ofs.close();
 
-    vector<pair<double, int>> peak; //ピーク位置格納用配列
+    vector<pair<int, double>> peak; //ピーク位置格納用配列
     getPeaks(peak, res_real); //固有値のピークの探索(実部)
 
     //gnuplot用追加書き込み
@@ -52,8 +52,8 @@ int main(){
     ofs << "peakNum = " << peak.size() << endl;
     ofs << fixed;
     for (int i = 0; i < peak.size(); i++){
-        ofs << "ER" << i << " = " << i2E(E_BEGIN_real, peak[i].second, dE_real) << endl;
-        ofs << "ER" << i << "_val = " << peak[i].first << endl;
+        ofs << "ER" << i << " = " << i2E(E_BEGIN_real, peak[i].first, dE_real) << endl;
+        ofs << "ER" << i << "_val = " << peak[i].second << endl;
     }
     ofs.close();
 

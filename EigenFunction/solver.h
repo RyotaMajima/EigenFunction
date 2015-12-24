@@ -37,7 +37,7 @@ void energyReal(vector<double> &res){
     fftw_destroy_plan(plan_back);
 }
 
-void energyImag(vector<vector<double>> &res, vector<pair<double, int>> &peak){
+void energyImag(vector<vector<double>> &res, vector<pair<int, double>> &peak){
     vC f(N);
     vvvC B(EN_imag, vvC(peak.size(), vC(N)));
 
@@ -78,27 +78,27 @@ void energyImag(vector<vector<double>> &res, vector<pair<double, int>> &peak){
     fftw_destroy_plan(plan_back);
 }
 
-void getPeaks(vector<pair<double, int>> &peak, vector<double> &res){
+void getPeaks(vector<pair<int, double>> &peak, vector<double> &res){
     //微分値が正から負に変わったところの値とインデックス
     for (int i = 1; i < EN_real; i++){
         if (res[i - 1] < res[i] && res[i] > res[i + 1]){
-            peak.push_back(make_pair(res[i], i));
+            peak.push_back(make_pair(i, res[i]));
         }
     }
 
     //ピーク値の大きい順にソート
-    sort(peak.begin(), peak.end(), [](const pair<double, int> &i, const pair<double, int> &j){ return i.first > j.first; });
+    sort(peak.begin(), peak.end(), [](const pair<int, double> &i, const pair<int, double> &j){ return i.second > j.second; });
     if (peak.empty()){
         cout << "no peak" << endl;
         exit(1);
     }
     else{
-        double E_th = peak[0].first / 10; //しきい値
+        double E_th = peak[0].second / 10; //しきい値
         //しきい値以下の要素を削除
-        peak.erase(remove_if(peak.begin(), peak.end(), [E_th](pair<double, int> pair) {return pair.first < E_th; }), peak.end());
+        peak.erase(remove_if(peak.begin(), peak.end(), [E_th](pair<int, double> pair) {return pair.second < E_th; }), peak.end());
 
         //実部の小さい順にソート
-        sort(peak.begin(), peak.end(), [](const pair<double, int> &i, const pair<double, int> &j){ return i.second < j.second; });
+        sort(peak.begin(), peak.end(), [](const pair<int, double> &i, const pair<int, double> &j){ return i.first < j.first; });
 
         //得られたピーク値を表示
         cout << "---- real ver. ----" << endl << endl;
@@ -106,7 +106,7 @@ void getPeaks(vector<pair<double, int>> &peak, vector<double> &res){
         cout << "threshold value : " << E_th << endl << endl;
         cout << "Re" << "\t" << "peak value" << endl;
         for (auto pair : peak){
-            printf("%.3lf\t%.3lf\n", i2E(E_BEGIN_real, pair.second, dE_real), pair.first);
+            printf("%.3lf\t%.3lf\n", i2E(E_BEGIN_real, pair.first, dE_real), pair.second);
         }
     }
 }
