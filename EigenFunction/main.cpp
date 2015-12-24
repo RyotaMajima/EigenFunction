@@ -21,14 +21,17 @@ int main(){
 
     ofstream ofs;
 
-    //gnuplot用パラメータ書き込み
+    //-----gnuplot用パラメータ書き込み-----
     ofs.open("params.txt");
     ofs << "T = " << T_END << endl;
     ofs << "N = " << N << endl;
     ofs.close();
+    //-------------------------------------
 
-    vector<double> res_real(EN_real); //結果格納用配列(実部)
-    energyReal(res_real); //エネルギー固有値の実部
+
+    //----------実部のピーク-----------
+    vector<double> res_real(EN_real);
+    energyReal(res_real);
 
     ofs.open("./output/energy_peak_real.txt");
     if (!ofs){
@@ -41,10 +44,12 @@ int main(){
         ofs << i2E(E_BEGIN_real, i, dE_real) << "\t";
         ofs << res_real[i] << endl;
     }
-
     ofs.close();
+    //--------------------------------------
 
-    vector<pair<int, double>> peak; //ピーク位置格納用配列
+
+    //---------エネルギー固有値(実部)の取得----------
+    vector<pair<int, double>> peak;
     getPeaks(peak, res_real); //固有値のピークの探索(実部)
 
     //gnuplot用追加書き込み
@@ -56,8 +61,10 @@ int main(){
         ofs << "ER" << i << "_val = " << peak[i].second << endl;
     }
     ofs.close();
+    //---------------------------------------------------
 
-    vector<vector<double>> res_imag(EN_imag, vector<double>(peak.size())); //結果格納用配列(虚部)
+    //-----------------虚部のプロット--------------------
+    vector<vector<double>> res_imag(EN_imag, vector<double>(peak.size()));
     energyImag(res_imag, peak); //エネルギー固有値の虚部
 
     ofs.open("./output/energy_imag.txt");
@@ -74,7 +81,10 @@ int main(){
         }
         ofs << endl;
     }
+    ofs.close();
+    //------------------------------------------------------
 
+    //gnuplotによるフィッティング
     FILE *gp = _popen("gnuplot.exe", "w");
 
     fprintf(gp, "load 'fit.plt'\n");
@@ -83,19 +93,18 @@ int main(){
 
     ifstream ifs;
 
+    //フィッティング結果の取得
     ifs.open("./output/fit_result.txt");
     if (!ifs){
         cerr << "file open error!" << endl;
         exit(1);
     }
 
-    vector<double> imag(peak.size());
+    vector<double> imag(peak.size()); //固有値の虚部格納用配列
 
     for (int i = 0; i < peak.size(); i++){
         ifs >> imag[i];
     }
-
-    cout << imag[0] << " " << imag[1] << endl;
 
     /*
     vvC phi(2, vC(N));
