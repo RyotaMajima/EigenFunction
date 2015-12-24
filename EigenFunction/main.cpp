@@ -81,6 +81,22 @@ int main(){
     fflush(gp);
     _pclose(gp);
 
+    ifstream ifs;
+
+    ifs.open("./output/fit_result.txt");
+    if (!ifs){
+        cerr << "file open error!" << endl;
+        exit(1);
+    }
+
+    vector<double> imag(peak.size());
+
+    for (int i = 0; i < peak.size(); i++){
+        ifs >> imag[i];
+    }
+
+    cout << imag[0] << " " << imag[1] << endl;
+
     /*
     vvC phi(2, vC(N));
     vector<double> real = { -1.02, -0.156 }, imag = { -5.233e-5, -3.692e-3 };
