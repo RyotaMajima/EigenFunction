@@ -75,6 +75,15 @@ int main(){
         ofs << endl;
     }
 
+    FILE *gp = _popen("gnuplot.exe", "w");
+
+    fprintf(gp, "load 'fit.plt'\n");
+    fflush(gp);
+
+    cout << "fitting finished" << endl;
+
+    _pclose(gp);
+
     /*
     vvC phi(2, vC(N));
     vector<double> real = { -1.02, -0.156 }, imag = { -5.233e-5, -3.692e-3 };
