@@ -51,7 +51,7 @@ void energyImag(vector<vector<double>> &res, vector<pair<int, double>> &peak){
         for (int j = 0; j < EN_imag; j++){
             for (int k = 0; k < peak.size(); k++){
                 for (int l = 0; l < N; l++){
-                    B[j][k][l] += f[l] * polar(dt, i2E(E_BEGIN_real, peak[k].second, dE_real) * (i * dt)) * exp(i2E(E_BEGIN_imag, j, dE_imag) * (i * dt));
+                    B[j][k][l] += f[l] * polar(dt, i2E(E_BEGIN_real, peak[k].first, dE_real) * (i * dt)) * exp(i2E(E_BEGIN_imag, j, dE_imag) * (i * dt));
                 }
             }
         }

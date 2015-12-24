@@ -79,9 +79,6 @@ int main(){
 
     fprintf(gp, "load 'fit.plt'\n");
     fflush(gp);
-
-    cout << "fitting finished" << endl;
-
     _pclose(gp);
 
     /*
