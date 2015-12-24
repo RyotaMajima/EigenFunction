@@ -28,7 +28,7 @@ int main(){
     ofs.close();
 
     vector<double> res_real(EN_real); //結果格納用配列(実部)
-    energyReal(res_real); //エネルギー固有値の実部を求める
+    energyReal(res_real); //エネルギー固有値の実部
 
     ofs.open("./output/energy_peak_real.txt");
     if (!ofs){
@@ -57,8 +57,8 @@ int main(){
     }
     ofs.close();
 
-    vector<vector<double>> res_imag(EN_imag, vector<double>(peak.size()));
-    energyImag(res_imag, peak);
+    vector<vector<double>> res_imag(EN_imag, vector<double>(peak.size())); //結果格納用配列(虚部)
+    energyImag(res_imag, peak); //エネルギー固有値の虚部
 
     ofs.open("./output/energy_imag.txt");
     if (!ofs){
