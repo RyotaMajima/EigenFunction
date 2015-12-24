@@ -30,7 +30,7 @@ int main(){
 
 
     //----------実部のピーク-----------
-    vector<double> res_real(EN_real);
+    vd res_real(EN_real);
     energyReal(res_real);
 
     ofs.open("./output/energy_peak_real.txt");
@@ -57,14 +57,15 @@ int main(){
     ofs << "peakNum = " << peak.size() << endl;
     ofs << fixed;
     for (int i = 0; i < peak.size(); i++){
-        ofs << "ER" << i << " = " << i2E(E_BEGIN_real, peak[i].first, dE_real) << endl;
+        ofs << "ER" << i << " = ";
+        ofs << i2E(E_BEGIN_real, peak[i].first, dE_real) << endl;
         ofs << "ER" << i << "_val = " << peak[i].second << endl;
     }
     ofs.close();
     //---------------------------------------------------
 
     //-----------------虚部のプロット--------------------
-    vector<vector<double>> res_imag(EN_imag, vector<double>(peak.size()));
+    vvd res_imag(EN_imag, vd(peak.size()));
     energyImag(res_imag, peak); //エネルギー固有値の虚部
 
     ofs.open("./output/energy_imag.txt");
@@ -84,7 +85,8 @@ int main(){
     ofs.close();
     //------------------------------------------------------
 
-    //gnuplotによるフィッティング
+
+    //--------gnuplotによるフィッティング-------------------
     FILE *gp = _popen("gnuplot.exe", "w");
 
     fprintf(gp, "load 'fit.plt'\n");
@@ -100,11 +102,13 @@ int main(){
         exit(1);
     }
 
-    vector<double> imag(peak.size()); //固有値の虚部格納用配列
+    vd imag(peak.size()); //固有値の虚部格納用配列
 
     for (int i = 0; i < peak.size(); i++){
         ifs >> imag[i];
     }
+    ifs.close();
+    //------------------------------------------------------
 
     /*
     vvC phi(2, vC(N));

@@ -22,6 +22,8 @@ using Complex = complex<double>;
 using vC = vector<Complex>;
 using vvC = vector<vC>;
 using vvvC = vector<vvC>;
+using vd = vector<double>;
+using vvd = vector<vd>;
 inline fftw_complex* fftwcast(Complex* f){ return reinterpret_cast<fftw_complex*>(f); }
 
 const double X_BEGIN = -5.0, X_END = 25.0; //Œn‚Ì—¼’[
