@@ -2,7 +2,7 @@
 #include "define.h"
 #include "common.h"
 
-void energyReal(vector<double> &res){
+void getRealPart(vector<double> &res){
     vC f(N);
     vvC A(EN_real, vC(N));
 

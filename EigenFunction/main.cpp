@@ -31,7 +31,7 @@ int main(){
 
     //----------À•”‚Ìƒs[ƒN-----------
     vd res_real(EN_real);
-    energyReal(res_real);
+    getRealPart(res_real);
 
     ofs.open("./output/energy_peak_real.txt");
     if (!ofs){
