@@ -17,7 +17,7 @@ int main(){
     printf("partition number : N = %d\n", N);
     printf("calculation time : T = %.1f\n", T_END);
     printf("time step : dt = %.2f\n", dt);
-    printf("--------------------------------\n");
+    printf("--------------------------------\n\n");
 
     ofstream ofs;
 
@@ -34,11 +34,9 @@ int main(){
     getRealPart(real);
 
     //----------‹••”-----------
-
     vd imag(real.size());
     getImagPart(imag, real);
-
-    
+        
     /*
     vvC phi(2, vC(N));
     vector<double> real = { -1.02, -0.156 }, imag = { -5.233e-5, -3.692e-3 };
