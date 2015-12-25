@@ -223,27 +223,47 @@ void getImagPart(vector<double> &imag, vector<double> &real){
 }
 
 //ŒÅ—Ló‘Ô‚Ì’Šo
-void getEigenfunction(vC &phi, double real, double imag){
+void getEigenfunction(vvC &phi, vd &real, vd &imag){
     vC f(N);
 
     fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_FORWARD, FFTW_MEASURE);
     fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_BACKWARD, FFTW_MEASURE);
 
-    init(f); //‰Šú‰»
-    
-    for (int i = 0; i <= TN; i++){
-        //Ï•ªŒvZ
-        for (int j = 0; j < N; j++){
-            phi[j] += f[j] * polar(dt, real * (i * dt)) * exp(-imag * (i * dt));
+    for (int i = 0; i < real.size(); i++){
+        init(f); //‰Šú‰»
+
+        for (int j = 0; j <= TN; j++){
+            //Ï•ªŒvZ
+            for (int k = 0; k < N; k++){
+                phi[i][k] += f[k] * polar(dt, real[i] * (j * dt)) * exp(-imag[i] * (j * dt));
+            }
+
+            timeEvolution(f, plan_for, plan_back);
         }
 
-        timeEvolution(f, plan_for, plan_back);
+        for (auto &val : phi[i]){
+            val *= exp(-fabs(imag[i]) * T_END) / T_END;
+        }
+
+        //Ä‹KŠi‰»
+        double tmp = simpson(phi[i]);
+
+        string filename = "./output/phi" + to_string(i) + ".txt";
+
+        ofstream ofs(filename);
+        if (!ofs){
+            cerr << "file open error!" << endl;
+            exit(1);
+        }
+
+        ofs << scientific;
+        for (int j = 0; j < N; j++){
+            ofs << i2x(j) << "\t";
+            ofs << V(i2x(j)) << "\t";
+            ofs << norm(phi[i][j]) / tmp << endl;
+        }
     }
 
     fftw_destroy_plan(plan_for);
     fftw_destroy_plan(plan_back);
-
-    for (auto &val : phi){
-        val *= exp(-fabs(imag) * T_END) / T_END;
-    }
 }
