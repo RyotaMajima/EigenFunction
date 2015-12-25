@@ -2,6 +2,37 @@
 #include "define.h"
 #include "common.h"
 
+void getPeaks(vector<pair<int, double>> &peak, vector<double> &res){
+    //微分値が正から負に変わったところの値とインデックス
+    for (int i = 1; i < EN_real; i++){
+        if (res[i - 1] < res[i] && res[i] > res[i + 1]){
+            peak.push_back(make_pair(i, res[i]));
+        }
+    }
+
+    //ピーク値の大きい順にソート
+    sort(peak.begin(), peak.end(), [](const pair<int, double> &i, const pair<int, double> &j){ return i.second > j.second; });
+    if (peak.empty()){
+        cout << "no peak" << endl;
+        exit(1);
+    }
+    else{
+        double E_th = peak[0].second / 10; //しきい値
+        //しきい値以下の要素を削除
+        peak.erase(remove_if(peak.begin(), peak.end(), [E_th](pair<int, double> pair) {return pair.second < E_th; }), peak.end());
+
+        //実部の小さい順にソート
+        sort(peak.begin(), peak.end(), [](const pair<int, double> &i, const pair<int, double> &j){ return i.first < j.first; });
+
+        //得られたピーク値を表示
+        cout << "threshold value : " << E_th << endl << endl;
+        cout << "Re" << "\t" << "peak value" << endl;
+        for (auto pair : peak){
+            printf("%.3lf\t%.3lf\n", i2E(E_BEGIN_real, pair.first, dE_real), pair.second);
+        }
+    }
+}
+
 void getRealPart(vector<double> &real){
     vC f(N);
 
@@ -22,6 +53,9 @@ void getRealPart(vector<double> &real){
         //時間発展
         timeEvolution(f, plan_for, plan_back);
     }
+
+    fftw_destroy_plan(plan_for);
+    fftw_destroy_plan(plan_back);
 
     for (int i = 0; i < EN_real; i++){
         for (int j = 0; j < N; j++){
@@ -68,9 +102,6 @@ void getRealPart(vector<double> &real){
     for (int i = 0; i < peak.size(); i++){
         real.push_back(i2E(E_BEGIN_real, peak[i].first, dE_real));
     }
-
-    fftw_destroy_plan(plan_for);
-    fftw_destroy_plan(plan_back);
 }
 
 void getImagPart(vector<double> &imag, vector<double> &real){
@@ -146,44 +177,13 @@ void getImagPart(vector<double> &imag, vector<double> &real){
         exit(1);
     }
 
+    vd err(real.size()); //フィッティングの誤差
+
     for (int i = 0; i < real.size(); i++){
-        ifs >> imag[i];
+        ifs >> imag[i] >> err[i];
     }
     //------------------------------------------------------
 
-}
-
-void getPeaks(vector<pair<int, double>> &peak, vector<double> &res){
-    //微分値が正から負に変わったところの値とインデックス
-    for (int i = 1; i < EN_real; i++){
-        if (res[i - 1] < res[i] && res[i] > res[i + 1]){
-            peak.push_back(make_pair(i, res[i]));
-        }
-    }
-
-    //ピーク値の大きい順にソート
-    sort(peak.begin(), peak.end(), [](const pair<int, double> &i, const pair<int, double> &j){ return i.second > j.second; });
-    if (peak.empty()){
-        cout << "no peak" << endl;
-        exit(1);
-    }
-    else{
-        double E_th = peak[0].second / 10; //しきい値
-        //しきい値以下の要素を削除
-        peak.erase(remove_if(peak.begin(), peak.end(), [E_th](pair<int, double> pair) {return pair.second < E_th; }), peak.end());
-
-        //実部の小さい順にソート
-        sort(peak.begin(), peak.end(), [](const pair<int, double> &i, const pair<int, double> &j){ return i.first < j.first; });
-
-        //得られたピーク値を表示
-        cout << "---- real ver. ----" << endl << endl;
-
-        cout << "threshold value : " << E_th << endl << endl;
-        cout << "Re" << "\t" << "peak value" << endl;
-        for (auto pair : peak){
-            printf("%.3lf\t%.3lf\n", i2E(E_BEGIN_real, pair.first, dE_real), pair.second);
-        }
-    }
 }
 
 //固有状態の抽出

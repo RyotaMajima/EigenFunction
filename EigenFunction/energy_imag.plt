@@ -10,6 +10,8 @@ set key spacing 1.3
 
 f(x) = a * ((exp((x - b) * T) - 1)/((x - b) * T))**2 * exp(-2 * x * T)
 
+set fit quiet
+
 a = 1e-2; b = 1e-4
 fit f(x) "./output/energy_imag.txt" us 1:2 via a,b
 set title sprintf("ground state $E_{0}^{R} = %.3f$ ($T = %.0f$)", ER0, T)
