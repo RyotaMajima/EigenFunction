@@ -25,15 +25,16 @@ void getPeaks(vector<pair<int, double>> &peak, vector<double> &res){
         sort(peak.begin(), peak.end(), [](const pair<int, double> &i, const pair<int, double> &j){ return i.first < j.first; });
 
         //得られたピーク値を表示
-        cout << "threshold value : " << E_th << endl;
+        cout << "-------peak search-------" << endl << endl;
+        cout << "threshold value : " << E_th << endl << endl;
         cout << "peak_pos" << "\t" << "peak value" << endl;
-        cout << setprecision(4);
+        cout << fixed;
         for (auto pair : peak){
             cout << i2E(E_BEGIN_real, pair.first, dE_real) << "\t";
             cout << pair.second << endl;
             //printf("%.3lf\t%.3lf\n", i2E(E_BEGIN_real, pair.first, dE_real), pair.second);
         }
-        cout << endl << endl;
+        cout << endl;
     }
 }
 
@@ -108,7 +109,7 @@ void getRealPart(vector<double> &real){
     }
 
     //実部の表示
-    cout << "-------real part------" << endl;
+    cout << "--------real part--------" << endl << endl;
     for (int i = 0; i < real.size(); i++){
         cout << "ER" << i << " = " << real[i] << endl;
     }

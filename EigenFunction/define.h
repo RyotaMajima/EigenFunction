@@ -45,5 +45,5 @@ const int EN_real = 200;
 const double dE_real = (E_END_real - E_BEGIN_real) / EN_real;
 
 const double E_BEGIN_imag = 0.0, E_END_imag = 0.03;
-const int EN_imag = 200;
+const int EN_imag = 100;
 const double dE_imag = (E_END_imag - E_BEGIN_imag) / EN_imag;
