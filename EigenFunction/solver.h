@@ -201,7 +201,8 @@ void getImagPart(vector<double> &imag, vector<double> &real){
     cout << scientific;
     for (int i = 0; i < imag.size(); i++){
         cout << "EI" << i << " = " << imag[i];
-        cout << "(" << "+/-" << err[i] << ")" << endl;
+        cout << " (" << "+/-" << (err[i] / imag[i]) * 100;
+        cout << " %" << ")" << endl;
     }
 }
 
