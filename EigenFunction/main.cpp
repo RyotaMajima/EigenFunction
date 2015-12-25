@@ -16,7 +16,7 @@ int main(){
     printf("system size : \t [%.1f, %.1f]\n", X_BEGIN, X_END);
     printf("partition number : N = %d\n", N);
     printf("calculation time : T = %.1f\n", T_END);
-    printf("time step : dt = %.2f\n", dt);
+    printf("time step : dt = %.3f\n", dt);
     printf("--------------------------------\n\n");
 
     ofstream ofs;
