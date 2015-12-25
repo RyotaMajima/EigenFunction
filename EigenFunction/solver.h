@@ -113,6 +113,7 @@ void getRealPart(vector<double> &real){
     for (int i = 0; i < real.size(); i++){
         cout << "ER" << i << " = " << real[i] << endl;
     }
+    cout << endl;
 }
 
 void getImagPart(vector<double> &imag, vector<double> &real){
@@ -172,7 +173,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
         ofs << endl;
     }
 
-    //--------gnuplotによるフィッティング-------------------
+    //--------gnuplotによるフィッティング-------------
     FILE *gp = _popen("gnuplot.exe", "w");
 
     fprintf(gp, "load 'fit.plt'\n");
@@ -193,8 +194,15 @@ void getImagPart(vector<double> &imag, vector<double> &real){
     for (int i = 0; i < real.size(); i++){
         ifs >> imag[i] >> err[i];
     }
-    //------------------------------------------------------
+    //------------------------------------------------
 
+    //虚部の表示
+    cout << "--------imag part--------" << endl << endl;
+    cout << scientific;
+    for (int i = 0; i < imag.size(); i++){
+        cout << "EI" << i << " = " << imag[i];
+        cout << "(" << "+/-" << err[i] << ")" << endl;
+    }
 }
 
 //固有状態の抽出
