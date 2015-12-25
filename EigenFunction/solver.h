@@ -2,14 +2,14 @@
 #include "define.h"
 #include "common.h"
 
-void getRealPart(vector<double> &res){
+void getRealPart(vector<double> &real){
     vC f(N);
-    vvC A(EN_real, vC(N));
 
     fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_FORWARD, FFTW_MEASURE);
     fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_BACKWARD, FFTW_MEASURE);
 
-    init(f);
+    init(f); //初期化
+    vvC A(EN_real, vC(N));
 
     for (int i = 0; i <= TN; i++){
         //実部のみで振る
@@ -29,29 +29,65 @@ void getRealPart(vector<double> &res){
         }
     }
 
+    vd res(EN_real);
     for (int i = 0; i < EN_real; i++){
         res[i] = simpson(A[i]);
+    }
+
+    //---------------ファイル書き込み----------------
+    ofstream ofs("./output/energy_peak_real.txt");
+    if (!ofs){
+        cerr << "file open error!" << endl;
+        exit(1);
+    }
+
+    ofs << scientific;
+    for (int i = 0; i < EN_real; i++){
+        ofs << i2E(E_BEGIN_real, i, dE_real) << "\t";
+        ofs << res[i] << endl;
+    }
+    ofs.close();
+    //-------------------------------------------------
+
+    vector<pair<int, double>> peak;
+    getPeaks(peak, res);
+
+    //---------------gnuplot用追加書き込み----------------
+    ofs.open("params.txt", ios_base::app);
+    ofs << "peakNum = " << peak.size() << endl;
+    ofs << fixed;
+    for (int i = 0; i < peak.size(); i++){
+        ofs << "ER" << i << " = ";
+        ofs << i2E(E_BEGIN_real, peak[i].first, dE_real) << endl;
+        ofs << "ER" << i << "_val = " << peak[i].second << endl;
+    }
+    ofs.close();
+    //----------------------------------------------------
+
+    //実部の取得
+    for (int i = 0; i < peak.size(); i++){
+        real.push_back(i2E(E_BEGIN_real, peak[i].first, dE_real));
     }
 
     fftw_destroy_plan(plan_for);
     fftw_destroy_plan(plan_back);
 }
 
-void energyImag(vector<vector<double>> &res, vector<pair<int, double>> &peak){
+void getImagPart(vector<double> &imag, vector<double> &real){
     vC f(N);
-    vvvC B(EN_imag, vvC(peak.size(), vC(N)));
+    vvvC B(EN_imag, vvC(real.size(), vC(N)));
 
     fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_FORWARD, FFTW_MEASURE);
     fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_BACKWARD, FFTW_MEASURE);
 
-    init(f);
+    init(f); //初期化
 
     for (int i = 0; i <= TN; i++){
         //虚部のみで振る
         for (int j = 0; j < EN_imag; j++){
-            for (int k = 0; k < peak.size(); k++){
+            for (int k = 0; k < real.size(); k++){
                 for (int l = 0; l < N; l++){
-                    B[j][k][l] += f[l] * polar(dt, i2E(E_BEGIN_real, peak[k].first, dE_real) * (i * dt)) * exp(i2E(E_BEGIN_imag, j, dE_imag) * (i * dt));
+                    B[j][k][l] += f[l] * polar(dt, real[k] * (i * dt)) * exp(i2E(E_BEGIN_imag, j, dE_imag) * (i * dt));
                 }
             }
         }
@@ -60,22 +96,61 @@ void energyImag(vector<vector<double>> &res, vector<pair<int, double>> &peak){
         timeEvolution(f, plan_for, plan_back);
     }
 
+    fftw_destroy_plan(plan_for);
+    fftw_destroy_plan(plan_back);
+
     for (int i = 0; i < EN_imag; i++){
-        for (int j = 0; j < peak.size(); j++){
+        for (int j = 0; j < real.size(); j++){
             for (int k = 0; k < N; k++){
                 B[i][j][k] *= exp(-i2E(E_BEGIN_imag, i, dE_imag) * T_END) / T_END;
             }
         }
     }
 
+    vvd res(EN_imag, vd(real.size()));
+
     for (int i = 0; i < EN_imag; i++){
-        for (int j = 0; j < peak.size(); j++){
+        for (int j = 0; j < real.size(); j++){
             res[i][j] = simpson(B[i][j]);
         }
     }
 
-    fftw_destroy_plan(plan_for);
-    fftw_destroy_plan(plan_back);
+    ofstream ofs("./output/energy_imag.txt");
+    if (!ofs){
+        cerr << "file open error!" << endl;
+        exit(1);
+    }
+
+    ofs << scientific;
+    for (int i = 0; i < EN_imag; i++){
+        ofs << i2E(E_BEGIN_imag, i, dE_imag) << "\t";
+        for (int j = 0; j < real.size(); j++){
+            ofs << res[i][j] << "\t";
+        }
+        ofs << endl;
+    }
+
+    //--------gnuplotによるフィッティング-------------------
+    FILE *gp = _popen("gnuplot.exe", "w");
+
+    fprintf(gp, "load 'fit.plt'\n");
+    fflush(gp);
+    _pclose(gp);
+
+    ifstream ifs;
+
+    //フィッティング結果の取得
+    ifs.open("./output/fit_result.txt");
+    if (!ifs){
+        cerr << "file open error!" << endl;
+        exit(1);
+    }
+
+    for (int i = 0; i < real.size(); i++){
+        ifs >> imag[i];
+    }
+    //------------------------------------------------------
+
 }
 
 void getPeaks(vector<pair<int, double>> &peak, vector<double> &res){

@@ -30,86 +30,15 @@ int main(){
 
 
     //----------実部のピーク-----------
-    vd res_real(EN_real);
-    getRealPart(res_real);
-
-    ofs.open("./output/energy_peak_real.txt");
-    if (!ofs){
-        cerr << "file open error!" << endl;
-        exit(1);
-    }
-
-    ofs << scientific;
-    for (int i = 0; i < EN_real; i++){
-        ofs << i2E(E_BEGIN_real, i, dE_real) << "\t";
-        ofs << res_real[i] << endl;
-    }
-    ofs.close();
-    //--------------------------------------
-
-
-    //---------エネルギー固有値(実部)の取得----------
-    vector<pair<int, double>> peak;
-    getPeaks(peak, res_real); //固有値のピークの探索(実部)
-
-    //gnuplot用追加書き込み
-    ofs.open("params.txt", ios_base::app);
-    ofs << "peakNum = " << peak.size() << endl;
-    ofs << fixed;
-    for (int i = 0; i < peak.size(); i++){
-        ofs << "ER" << i << " = ";
-        ofs << i2E(E_BEGIN_real, peak[i].first, dE_real) << endl;
-        ofs << "ER" << i << "_val = " << peak[i].second << endl;
-    }
-    ofs.close();
-    //---------------------------------------------------
+    vd real;
+    getRealPart(real);
 
     //-----------------虚部のプロット--------------------
-    vvd res_imag(EN_imag, vd(peak.size()));
-    energyImag(res_imag, peak); //エネルギー固有値の虚部
 
-    ofs.open("./output/energy_imag.txt");
-    if (!ofs){
-        cerr << "file open error!" << endl;
-        exit(1);
-    }
+    vd imag(real.size());
+    getImagPart(imag, real); //エネルギー固有値の虚部
 
-    ofs << scientific;
-    for (int i = 0; i < EN_imag; i++){
-        ofs << i2E(E_BEGIN_imag, i, dE_imag) << "\t";
-        for (int j = 0; j < peak.size(); j++){
-            ofs << res_imag[i][j] << "\t";
-        }
-        ofs << endl;
-    }
-    ofs.close();
-    //------------------------------------------------------
-
-
-    //--------gnuplotによるフィッティング-------------------
-    FILE *gp = _popen("gnuplot.exe", "w");
-
-    fprintf(gp, "load 'fit.plt'\n");
-    fflush(gp);
-    _pclose(gp);
-
-    ifstream ifs;
-
-    //フィッティング結果の取得
-    ifs.open("./output/fit_result.txt");
-    if (!ifs){
-        cerr << "file open error!" << endl;
-        exit(1);
-    }
-
-    vd imag(peak.size()); //固有値の虚部格納用配列
-
-    for (int i = 0; i < peak.size(); i++){
-        ifs >> imag[i];
-    }
-    ifs.close();
-    //------------------------------------------------------
-
+    
     /*
     vvC phi(2, vC(N));
     vector<double> real = { -1.02, -0.156 }, imag = { -5.233e-5, -3.692e-3 };
