@@ -26,13 +26,11 @@ void getPeaks(vector<pair<int, double>> &peak, vector<double> &res){
 
         //得られたピーク値を表示
         cout << "-------peak search-------" << endl << endl;
-        cout << "threshold value : " << E_th << endl << endl;
-        cout << "peak_pos" << "\t" << "peak value" << endl;
-        cout << fixed;
+        //cout << "threshold value : " << E_th << endl << endl;
+        cout << "peak pos" << "\t" << "peak value" << endl;
         for (auto pair : peak){
-            cout << i2E(E_BEGIN_real, pair.first, dE_real) << "\t";
+            cout << i2E(E_BEGIN_real, pair.first, dE_real) << "\t\t";
             cout << pair.second << endl;
-            //printf("%.3lf\t%.3lf\n", i2E(E_BEGIN_real, pair.first, dE_real), pair.second);
         }
         cout << endl;
     }
@@ -172,8 +170,9 @@ void getImagPart(vector<double> &imag, vector<double> &real){
         }
         ofs << endl;
     }
+    ofs.close();
 
-    //--------gnuplotによるフィッティング-------------
+    //---------gnuplotによるフィッティング-------------
     FILE *gp = _popen("gnuplot.exe", "w");
 
     fprintf(gp, "load 'fit.plt'\n");
@@ -194,30 +193,57 @@ void getImagPart(vector<double> &imag, vector<double> &real){
     for (int i = 0; i < real.size(); i++){
         ifs >> imag[i] >> err[i];
     }
-    //------------------------------------------------
+    //--------------------------------------------------
+
+    //フィッティング誤差を％に直す
+    for (int i = 0; i < imag.size(); i++){
+        err[i] = (err[i] / imag[i]) * 100;
+    }
+
+    //---------------gnuplot用追加書き込み----------------
+    ofs.open("params.txt", ios_base::app);
+    for (int i = 0; i < imag.size(); i++){
+        ofs << scientific;
+        ofs << "EI" << i << " = " << imag[i] << endl;
+        ofs << fixed;
+        ofs << "EI_err" << i << " = " << err[i] << endl;
+    }
+    ofs.close();
+    //----------------------------------------------------
 
     //虚部の表示
     cout << "--------imag part--------" << endl << endl;
-    cout << scientific;
     for (int i = 0; i < imag.size(); i++){
+        cout << scientific;
         cout << "EI" << i << " = " << imag[i];
-        cout << " (" << "+/-" << (err[i] / imag[i]) * 100;
+        cout << fixed;
+        cout << " (" << "+/- " << err[i];
         cout << " %" << ")" << endl;
     }
 }
 
 //固有状態の抽出
-void getEigenfunction(vC &phi, vC &f, fftw_plan plan_for, fftw_plan plan_back, double energy_real, double energy_imag){
+void getEigenfunction(vC &phi, double real, double imag){
+    vC f(N);
+
+    fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_FORWARD, FFTW_MEASURE);
+    fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_BACKWARD, FFTW_MEASURE);
+
+    init(f); //初期化
+    
     for (int i = 0; i <= TN; i++){
         //積分計算
         for (int j = 0; j < N; j++){
-            phi[j] += f[j] * polar(dt, energy_real * (i * dt)) * exp(-energy_imag * (i * dt));
+            phi[j] += f[j] * polar(dt, real * (i * dt)) * exp(-imag * (i * dt));
         }
 
         timeEvolution(f, plan_for, plan_back);
     }
 
+    fftw_destroy_plan(plan_for);
+    fftw_destroy_plan(plan_back);
+
     for (auto &val : phi){
-        val *= exp(-fabs(energy_imag) * T_END) / T_END;
+        val *= exp(-fabs(imag) * T_END) / T_END;
     }
 }
