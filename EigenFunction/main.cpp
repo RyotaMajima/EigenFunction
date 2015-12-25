@@ -42,36 +42,8 @@ int main(){
     vvC phi(real.size(), vC(N));
     getEigenfunction(phi, real, imag);
 
-    //-------調子振動子の解---------
-
-
-    ////比較のため調和振動子の解を出力
-    //vector<vector<double>> ho(2, vector<double>(N));
-    //for (int i = 0; i < N; i++){
-    //    double x = i2x(i);
-    //    ho[0][i] = groundState(x, 0.0);
-    //    ho[1][i] = firstExcited(x, 0.0);
-    //}
-
-    //ofstream ofs;
-    //ofs.open("./output/phi.txt");
-    //if (!ofs){
-    //    cerr << "file open error!" << endl;
-    //    exit(1);
-    //}
-
-    //ofs << scientific;
-    //for (int i = 0; i < N; i++){
-    //    ofs << i2x(i) << "\t" << V(i2x(i)) <<"\t";
-    //    for (int j = 0; j < 2; j++){
-    //        ofs << norm(ho[j][i]) << "\t";
-    //        ofs << norm(phi[j][i]) << "\t";
-    //    }
-    //    ofs << endl;
-    //}
-
-    //ofs.close();
-
+    //-------調子振動子の解-------
+    getHarmonic();
 
     auto end = system_clock::now();
     auto dur = end - start;

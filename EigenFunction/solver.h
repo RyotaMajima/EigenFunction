@@ -267,3 +267,25 @@ void getEigenfunction(vvC &phi, vd &real, vd &imag){
     fftw_destroy_plan(plan_for);
     fftw_destroy_plan(plan_back);
 }
+
+void getHarmonic(){
+    vvd ho(2, vd(N));
+    
+    for (int i = 0; i < N; i++){
+        ho[0][i] = groundState(i2x(i), 0.0);
+        ho[1][i] = firstExcited(i2x(i), 0.0);
+    }
+
+    ofstream ofs("./output/ho.txt");
+    if (!ofs){
+        cerr << "file open error!" << endl;
+        exit(1);
+    }
+
+    ofs << scientific;
+    for (int i = 0; i < N; i++){
+        ofs << i2x(i) << "\t";
+        ofs << norm(ho[0][i]) << "\t";
+        ofs << norm(ho[1][i]) << endl;
+    }
+}
