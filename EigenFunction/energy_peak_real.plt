@@ -2,8 +2,8 @@ unset multiplot; reset
 
 load "./params.txt"
 
-#set term tikz standalone
-#set output "C:/Users/sigmajima/Dropbox/TeX/thesis/interim/slide/graph_slide/real.tex"
+#set term tikz standalone size 16cm,10cm
+#set output "C:/Users/U24E/Dropbox/TeX/thesis/thesis/graph/real.tex"
 
 set yran [0:1]
 set xlab "$\\varepsilon^{R} / \\hbar \\omega$"
@@ -19,7 +19,7 @@ if(peakNum > 1){
 
 set label 3 sprintf("$T = %.0f$", T) right at graph 0.9,0.9
 
-pl "./output/energy_peak_real.txt" ti "" w l lc rgb "red"
+pl "./output/energy_peak_real.txt" ti "" w l lc rgb "red" lw 2
 
 set output
 set term pop

@@ -1,6 +1,9 @@
 unset multiplot; reset
+
 #set ter tikz standalone size 15cm,10cm font ",6"
-#set output "C:/Users/sigmajima/Dropbox/TeX/thesis/interim/slide/graph_slide/imag.tex"
+#set ter tikz standalone size 16cm,10cm
+#set output "C:/Users/U24E/Dropbox/TeX/thesis/thesis/graph/imag.tex"
+
 load "params.txt"
 set multiplot layout 1,2
 
