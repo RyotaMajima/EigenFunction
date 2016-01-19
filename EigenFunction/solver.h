@@ -220,6 +220,18 @@ void getImagPart(vector<double> &imag, vector<double> &real){
         cout << " (" << "+/- " << err[i];
         cout << " %" << ")" << endl;
     }
+
+    ofs.open("./output/error.txt", ios::app);
+    if (!ofs){
+        cerr << "file open error!" << endl;
+        exit(1);
+    }
+
+    ofs << T_END << "\t";
+    for (int i = 0; i < real.size(); i++){
+        ofs << err[i] << "\t";
+    }
+    ofs << endl;
 }
 
 //ŒÅ—Ló‘Ô‚Ì’Šo
