@@ -254,7 +254,8 @@ void getEigenfunction(vvC &phi, vd &real, vd &imag){
         }
 
         for (auto &val : phi[i]){
-            val *= exp(-fabs(imag[i]) * T_END) / T_END;
+            //val *= exp(-fabs(imag[i]) * T_END) / T_END;
+            val /= T_END;
         }
 
         //çƒãKäiâª
