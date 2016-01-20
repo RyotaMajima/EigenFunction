@@ -7,6 +7,7 @@ double i2x(int i){
 double i2k(int i){
     return 2 * M_PI * ((i < N / 2) ? i : i - N) / L;
 }
+
 double i2E(double begin, int index, double width){
     return begin + index * width;
 }
