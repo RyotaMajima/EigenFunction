@@ -15,7 +15,7 @@ f(x) = a * ((exp((x - b) * T) - 1)/((x - b) * T))**2 * exp(-2 * x * T)
 
 set fit results
 
-a = 1e-10; b = 1e-10
+a = 1e-5; b = 1e-5
 fit f(x) "./output/energy_imag.txt" us 1:2 via a,b
 set title sprintf("ground state $E_{0}^{R} = %.3f$ ($T = %.0f$)", ER0, T)
 set label 1 sprintf("$E_{0}^{I}$ = %.3e", b) right at graph 0.9,0.8
