@@ -17,16 +17,15 @@ fit f(x) "./output/energy_imag.txt" us 1:2 via a,b
 set print filename
 print b, " ", b_err
 
-#if(peakNum > 1){
-#	a = 1e-10; b = 1e-10
-#	fit f(x) "./output/energy_imag.txt" us 1:3 via a,b
-#	set print filename append
-#	print b, " ", b_err
-#}
-
 do for[i = 2 : peakNum : 1]{
 	a = 1e-10; b = 1e-10
-	fit f(x) "./output/energy_imag.txt" us 1:3 via a,b
+	fit f(x) "./output/energy_imag.txt" us 1:(i+1) via a,b
+	set print filename append
+	print b, " ", b_err
+}
+ = 2 : peakNum : 1]{
+	a = 1e-10; b = 1e-10
+	fit f(x) "./output/energy_imag.txt" us 1:(i+1) via a,b
 	set print filename append
 	print b, " ", b_err
 }
