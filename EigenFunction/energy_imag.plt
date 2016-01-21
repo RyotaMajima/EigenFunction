@@ -11,7 +11,7 @@ set xlab "$\\varepsilon^{I} / \\hbar \\omega$"
 set ylab "$|| \\Phi_{T}(\\varepsilon^{I}) ||^{2}$" offset -2,0
 set key spacing 1.3
 
-f(x) = a * ((exp((x - b) * T) - 1)/((x - b) * T))**2 * exp(-2 * x * T)
+f(x) = a * ((exp((x - b) * T) - 1)/((x - b) * T))**2# * exp(-2 * x * T)
 
 set fit results
 

@@ -25,6 +25,7 @@ int main(){
     ofs.open("params.txt");
     ofs << "T = " << T_END << endl;
     ofs << "N = " << N << endl;
+    ofs << "b = " << b << endl;
     ofs.close();
     //-------------------------------------
 
