@@ -46,6 +46,6 @@ const double E_BEGIN_real = -1.0 / (6.0 * b*b), E_END_real = 0.0;
 const int EN_real = 700;
 const double dE_real = (E_END_real - E_BEGIN_real) / EN_real;
 
-const double E_BEGIN_imag = 0.0, E_END_imag = 0.03;
-const int EN_imag = 600;
+const double E_BEGIN_imag = 0.0, E_END_imag = 0.01;
+const int EN_imag = 500;
 const double dE_imag = (E_END_imag - E_BEGIN_imag) / EN_imag;
