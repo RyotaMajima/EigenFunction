@@ -7,6 +7,9 @@ double i2x(int i){
 double i2k(int i){
     return 2 * M_PI * ((i < N / 2) ? i : i - N) / L;
 }
+int x2i(double x){
+    return (int)((x - X_BEGIN) / DELTA_X);
+}
 
 double i2E(double begin, int index, double width){
     return begin + index * width;
@@ -43,18 +46,19 @@ double V_opt(double x){
 //SimpsonÏ•ª
 double simpson(vC &f){
     double S_even, S_odd;
+    int n = N / 2;
 
     S_even = S_odd = 0.0;
 
-    for (int i = 1; i < (N / 2) - 1; i++){
+    for (int i = 1; i < (n / 2) - 1; i++){
         S_even += norm(f[2 * i]);
     }
 
-    for (int i = 1; i < N / 2; i++){
+    for (int i = 1; i < n / 2; i++){
         S_odd += norm(f[2 * i - 1]);
     }
 
-    return DELTA_X * (norm(f[0]) + 2 * S_even + 4 * S_odd + norm(f[N - 1])) / 3.0;
+    return DELTA_X * (norm(f[0]) + 2 * S_even + 4 * S_odd + norm(f[n - 1])) / 3.0;
 }
 
 //dt‚¾‚¯ŠÔ”­“W‚³‚¹‚éŠÖ”

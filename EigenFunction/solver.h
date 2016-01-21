@@ -302,3 +302,15 @@ void getHarmonic(){
         ofs << norm(ho[1][i]) << endl;
     }
 }
+
+void calcTurningPoints(vector<double> &x, double E){
+    //‹‰ğ
+    gsl_poly_solve_cubic(-3.0 / (2 * b), 0.0, (3.0 / b)*(1.0 / (6.0*b*b) + E), &x[0], &x[1], &x[2]);
+
+    //“]‰ñ“_‚Ì•\¦
+    cout << "E = " << E << endl;
+    for (int i = 0; i < (int)x.size(); i++){
+        cout << "x" << i << " : " << x[i] << endl;
+    }
+    cout << endl;
+}
