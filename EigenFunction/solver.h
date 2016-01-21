@@ -261,6 +261,10 @@ void getEigenfunction(vvC &phi, vd &real, vd &imag){
         //Ä‹KŠi‰»
         double tmp = simpson(phi[i]);
 
+        for (int j = 0; j < N; j++){
+            phi[i][j] = norm(phi[i][j]) / tmp;
+        }
+
         string filename = "./output/phi" + to_string(i) + ".txt";
 
         ofstream ofs(filename);
@@ -273,7 +277,7 @@ void getEigenfunction(vvC &phi, vd &real, vd &imag){
         for (int j = 0; j < N; j++){
             ofs << i2x(j) << "\t";
             ofs << V(i2x(j)) << "\t";
-            ofs << norm(phi[i][j]) / tmp << endl;
+            ofs << phi[i][j]<< endl;
         }
     }
 
@@ -310,14 +314,15 @@ void decayRatio(vvC &phi, vd &real){
         exit(1);
     }
 
-    fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(phi[1].data()), fftwcast(phi[1].data()), FFTW_FORWARD, FFTW_MEASURE);
-    fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(phi[1].data()), fftwcast(phi[1].data()), FFTW_BACKWARD, FFTW_MEASURE);
+    fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(phi[0].data()), fftwcast(phi[0].data()), FFTW_FORWARD, FFTW_MEASURE);
+    fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(phi[0].data()), fftwcast(phi[0].data()), FFTW_BACKWARD, FFTW_MEASURE);
 
-    int n = x2i(1.0 / b + 2);
+    int n = x2i((1.0 / b) + 2);
 
+    ofs << scientific;
     for (int i = 0; i <= TN; i++){
-        ofs << i * dt << "\t" << simpson(phi[1], n) << endl;;
-        timeEvolution(phi[1], plan_for, plan_back);
+        ofs << i * dt << "\t" << simpson(phi[0], n) << endl;;
+        timeEvolution(phi[0], plan_for, plan_back);
     }
 
     fftw_destroy_plan(plan_for);
