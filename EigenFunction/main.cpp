@@ -25,7 +25,6 @@ int main(){
     ofs.open("params.txt");
     ofs << "T = " << T_END << endl;
     ofs << "N = " << N << endl;
-    ofs << "b = " << b << endl;
     ofs.close();
     //-------------------------------------
 
@@ -39,12 +38,12 @@ int main(){
     vd imag(real.size());
     getImagPart(imag, real);
 
-    //-------固有関数の抽出-------
-    vvC phi(real.size(), vC(N));
-    getEigenfunction(phi, real, imag);
+    ////-------固有関数の抽出-------
+    //vvC phi(real.size(), vC(N));
+    //getEigenfunction(phi, real, imag);
 
-    //-------調子振動子の解-------
-    getHarmonic();
+    ////-------調子振動子の解-------
+    //getHarmonic();
 
     auto end = system_clock::now();
     auto dur = end - start;
