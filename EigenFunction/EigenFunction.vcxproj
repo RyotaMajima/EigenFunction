@@ -46,8 +46,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(MKLIncludeDir);$(IncludePath);C:\Users\U24E\Documents\fftw</IncludePath>
-    <LibraryPath>$(OmpLibDir);$(LibraryPath);C:\Users\U24E\Documents\fftw</LibraryPath>
+    <IncludePath>$(MKLIncludeDir);$(IncludePath);C:\Users\U24E\Documents\GSL\gsl\x86\include;C:\Users\U24E\Documents\fftw</IncludePath>
+    <LibraryPath>$(OmpLibDir);C:\Users\U24E\Documents\GSL\gsl\x86\lib;$(LibraryPath);C:\Users\U24E\Documents\fftw</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

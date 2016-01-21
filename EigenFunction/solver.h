@@ -143,7 +143,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
     for (int i = 0; i < EN_imag; i++){
         for (int j = 0; j < real.size(); j++){
             for (int k = 0; k < N; k++){
-                B[i][j][k] *= exp(-i2E(E_BEGIN_imag, i, dE_imag) * T_END) / T_END;
+                B[i][j][k] *= exp(-i2E(E_BEGIN_imag, i, dE_imag[j]) * T_END) / T_END;
             }
         }
     }
