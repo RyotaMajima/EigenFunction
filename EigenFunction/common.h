@@ -4,6 +4,9 @@
 double i2x(int i){
     return X_BEGIN + i * DELTA_X;
 }
+int x2i(double x){
+    return (int)((x - X_BEGIN) / DELTA_X);
+}
 double i2k(int i){
     return 2 * M_PI * ((i < N / 2) ? i : i - N) / L;
 }
@@ -55,6 +58,24 @@ double simpson(vC &f){
     }
 
     return DELTA_X * (norm(f[0]) + 2 * S_even + 4 * S_odd + norm(f[n - 1])) / 3.0;
+}
+
+double simpson(vC &f, int n){
+    n += (n % 2) ? 0 : 1;
+    double S_even, S_odd;
+
+    S_even = S_odd = 0.0;
+
+    for (int i = 1; i < (n / 2) - 1; i++){
+        S_even += norm(f[2 * i]);
+    }
+
+    for (int i = 1; i < n / 2; i++){
+        S_odd += norm(f[2 * i - 1]);
+    }
+
+    return DELTA_X * (norm(f[0]) + 2 * S_even + 4 * S_odd + norm(f[n - 1])) / 3.0;
+
 }
 
 //dt‚¾‚¯ŽžŠÔ”­“W‚³‚¹‚éŠÖ”

@@ -302,3 +302,25 @@ void getHarmonic(){
         ofs << norm(ho[1][i]) << endl;
     }
 }
+
+void decayRatio(vvC &phi, vd &real){
+    ofstream ofs("./output/decay.txt");
+    if (!ofs){
+        cerr << "file open error!" << endl;
+        exit(1);
+    }
+
+    fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(phi[1].data()), fftwcast(phi[1].data()), FFTW_FORWARD, FFTW_MEASURE);
+    fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(phi[1].data()), fftwcast(phi[1].data()), FFTW_BACKWARD, FFTW_MEASURE);
+
+    int n = x2i(1.0 / b + 2);
+
+    for (int i = 0; i <= TN; i++){
+        ofs << i * dt << "\t" << simpson(phi[1], n) << endl;;
+        timeEvolution(phi[1], plan_for, plan_back);
+    }
+
+    fftw_destroy_plan(plan_for);
+    fftw_destroy_plan(plan_back);
+
+}
