@@ -152,7 +152,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
 
     for (int i = 0; i < EN_imag; i++){
         for (int j = 0; j < real.size(); j++){
-            res[i][j] = simpson(B[i][j]) * exp(2 * i2E(E_BEGIN_imag, i, dE_imag) * T_END);
+            res[i][j] = simpson(B[i][j]);
         }
     }
 
@@ -221,17 +221,17 @@ void getImagPart(vector<double> &imag, vector<double> &real){
         cout << " %" << ")" << endl;
     }
 
-    ofs.open("./output/error.txt", ios::app);
-    if (!ofs){
-        cerr << "file open error!" << endl;
-        exit(1);
-    }
+    //ofs.open("./output/error.txt", ios::app);
+    //if (!ofs){
+    //    cerr << "file open error!" << endl;
+    //    exit(1);
+    //}
 
-    ofs << T_END << "\t";
-    for (int i = 0; i < real.size(); i++){
-        ofs << err[i] << "\t";
-    }
-    ofs << endl;
+    //ofs << T_END << "\t";
+    //for (int i = 0; i < real.size(); i++){
+    //    ofs << err[i] << "\t";
+    //}
+    //ofs << endl;
 }
 
 //ŒÅ—Ló‘Ô‚Ì’Šo
