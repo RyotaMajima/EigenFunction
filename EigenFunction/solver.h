@@ -166,7 +166,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
     for (int i = 0; i < EN_imag; i++){
         ofs << i2E(E_BEGIN_imag, i, dE_imag) << "\t";
         for (int j = 0; j < real.size(); j++){
-            ofs << res[i][j] << "\t";
+            ofs << res[i][j] * exp(i2E(E_BEGIN_imag, i, dE_imag) * T_END) << "\t";
         }
         ofs << endl;
     }

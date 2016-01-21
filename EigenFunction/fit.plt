@@ -11,7 +11,7 @@ set fit errorvariables
 
 filename = "./output/fit_result.txt"
 
-f(x) = a * ((exp((x - b) * T) - 1)/((x - b) * T))**2 * exp(-2 * x * T)
+f(x) = a * ((exp((x - b) * T) - 1)/((x - b) * T))**2 * exp(-1 * x * T)
 a = 1e-5; b = 1e-5
 
 fit f(x) "./output/energy_imag.txt" us 1:2 via a,b
