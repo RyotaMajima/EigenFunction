@@ -3,7 +3,6 @@
 #define _USE_MATH_DEFINES
 #define _CRT_SECURE_NO_WARNINGS
 #pragma comment(lib, "libfftw3-3.lib")
-#pragma comment(lib, "gsl.lib")
 #include<iostream>
 #include<iomanip>
 #include<fstream>
@@ -17,7 +16,6 @@
 #include<complex>
 #include<chrono>
 #include<fftw3.h>
-#include <gsl/gsl_poly.h>
 using namespace std;
 using namespace std::chrono;
 using Complex = complex<double>;
