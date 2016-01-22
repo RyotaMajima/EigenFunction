@@ -4,7 +4,7 @@
 
 void getPeaks(vector<pair<int, double>> &peak, vector<double> &res){
     //微分値が正から負に変わったところの値とインデックス
-    for (int i = 1; i < EN_real; i++){
+    for (int i = 1; i < EN_real - 1; i++){
         if (res[i - 1] < res[i] && res[i] > res[i + 1]){
             peak.push_back(make_pair(i, res[i]));
         }
