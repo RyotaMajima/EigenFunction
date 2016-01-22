@@ -1,7 +1,7 @@
 unset multiplot; reset
 
-#set ter tikz standalone size 297mm,210mm font ",12"
-#set output "./output/graph.tex"
+set ter tikz standalone size 297mm,210mm font ",12"
+set output "./graph/graph.tex"
 #set output "C:/Users/U24E/Dropbox/TeX/thesis/thesis/graph/imag.tex"
 
 load "params.txt"

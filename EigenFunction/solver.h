@@ -262,11 +262,12 @@ void getEigenfunction(vvC &phi, vd &real, vd &imag){
 
         //Ä‹KŠi‰»
         double tmp = simpson(phi[i]);
-        cout << tmp << endl;
 
         for (int j = 0; j < N; j++){
-            phi[i][j] = norm(phi[i][j]) / tmp;
+            phi[i][j] = phi[i][j] / sqrt(tmp);
         }
+
+        //cout << simpson(phi[i]) << endl;
 
         string filename = "./output/phi" + to_string(i) + ".txt";
 
@@ -280,7 +281,7 @@ void getEigenfunction(vvC &phi, vd &real, vd &imag){
         for (int j = 0; j < N; j++){
             ofs << i2x(j) << "\t";
             ofs << V(i2x(j)) << "\t";
-            ofs << phi[i][j].real() << endl;
+            ofs << norm(phi[i][j]) << endl;
         }
     }
 
@@ -320,11 +321,11 @@ void decayRatio(vvC &phi, vd &real){
     fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(phi[0].data()), fftwcast(phi[0].data()), FFTW_FORWARD, FFTW_MEASURE);
     fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(phi[0].data()), fftwcast(phi[0].data()), FFTW_BACKWARD, FFTW_MEASURE);
 
-    int n = x2i((1.0 / b) + 0.1);
+    //int n = x2i((1.0 / b) + 0.1);
 
     ofs << scientific;
     for (int i = 0; i <= TN; i++){
-        ofs << i * dt << "\t" << simpson(phi[0], n) << endl;
+        ofs << i * dt << "\t" << simpson(phi[0]) << endl;
         timeEvolution(phi[0], plan_for, plan_back);
     }
 

@@ -46,7 +46,7 @@ int main(){
     //-------’²qU“®q‚Ì‰ğ-------
     getHarmonic();
 
-    //decayRatio(phi, real);
+    decayRatio(phi, real);
 
     auto end = system_clock::now();
     auto dur = end - start;
