@@ -128,7 +128,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
         for (int j = 0; j < EN_imag; j++){
             for (int k = 0; k < real.size(); k++){
                 for (int l = 0; l < N; l++){
-                    B[j][k][l] += f[l] * polar(dt, real[k] * (i * dt)) * exp(i2E(E_BEGIN_imag, j, dE_imag(k)) * (i * dt));
+                    B[j][k][l] += f[l] * polar(dt, real[k] * (i * dt)) * exp(GetValueLog(E_BEGIN_imag, E_END_imag, EN_imag, j) * (i * dt));
                 }
             }
         }
@@ -143,7 +143,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
     for (int i = 0; i < EN_imag; i++){
         for (int j = 0; j < real.size(); j++){
             for (int k = 0; k < N; k++){
-                B[i][j][k] *= exp(-i2E(E_BEGIN_imag, i, dE_imag(j)) * T_END) / T_END;
+                B[i][j][k] *= exp(-GetValueLog(E_BEGIN_imag, E_END_imag, EN_imag, i)) / T_END;
             }
         }
     }
@@ -152,7 +152,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
 
     for (int i = 0; i < EN_imag; i++){
         for (int j = 0; j < real.size(); j++){
-            res[i][j] = simpson(B[i][j]) * exp(i2E(E_BEGIN_imag, i, dE_imag(j)) * T_END);
+            res[i][j] = simpson(B[i][j]) * exp(GetValueLog(E_BEGIN_imag, E_END_imag, EN_imag, i) * T_END);
         }
     }
 
@@ -163,13 +163,12 @@ void getImagPart(vector<double> &imag, vector<double> &real){
     }
 
     ofs << scientific;
-    for (int i = 0; i < real.size(); i++){
-        for (int j = 0; j < EN_imag; j++){
-            ofs << i2E(E_BEGIN_imag, j, dE_imag(i)) << "\t";
-            ofs << res[j][i] << endl;
+    for (int i = 0; i < EN_imag; i++){
+        ofs << GetValueLog(E_BEGIN_imag, E_END_imag, EN_imag, i) << "\t";
+        for (int j = 0; j < real.size(); j++){
+            ofs << res[i][j] << "\t";
         }
         ofs << endl;
-
     }
 
     ofs.close();
