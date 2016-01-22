@@ -70,6 +70,7 @@ double simpson(vC &f){
     return DELTA_X * (norm(f[0]) + 2 * S_even + 4 * S_odd + norm(f[n - 1])) / 3.0;
 }
 
+//積分の上限のインデックスを指定したSimpson積分
 double simpson(vC &f, int n){
     n += (n % 2) ? 0 : 1;
     double S_even, S_odd;

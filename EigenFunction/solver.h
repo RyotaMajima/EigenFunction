@@ -319,7 +319,7 @@ void decayRatio(vvC &phi, vd &real){
 
         ofs << scientific;
         for (int j = 0; j <= TN; j++){
-            ofs << j * dt << "\t" << simpson(f) << endl;
+            ofs << j * dt << "\t" << simpson(f, n) << endl;
             timeEvolution(f, plan_for, plan_back);
         }
         ofs << endl << endl;
@@ -350,6 +350,8 @@ void decayRatio(vvC &phi, vd &real){
     for (int i = 0; i < real.size(); i++){
         ifs >> lambda[i] >> err[i];
     }
+
+    ifs.close();
     //--------------------------------------------------
 
     //フィッティング誤差を％に直す

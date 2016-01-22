@@ -20,13 +20,13 @@ set fit results
 
 fit f(x) "./output/decay.txt" index 0 every 100 via a,b
 set title sprintf("ground state $\\lambda = %.4e$", lambda0)
-pl f(x) ti "fitting curve" ls 1, "" index 0 every 100 ti "data" ls 2
+pl f(x) ti "fitting curve" ls 1, "" index 0 every 1000 ti "data" ls 2
 
 if(peakNum > 1){
 	a = 1e-10; b = 1e-10
 	fit f(x) "./output/decay.txt" index 1 every 100 via a,b
 	set title sprintf("first excited state $\\lambda = %.4e$", lambda1)
-	pl f(x) ti "fitting curve" ls 1, "" index 1 every 100 ti "data" ls 2
+	pl f(x) ti "fitting curve" ls 1, "" index 1 every 1000 ti "data" ls 2
 }
 
 unset multiplot
