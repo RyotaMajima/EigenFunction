@@ -312,24 +312,31 @@ void getHarmonic(){
 }
 
 void decayRatio(vvC &phi, vd &real){
+    vC f(N);
     ofstream ofs("./output/decay.txt");
     if (!ofs){
         cerr << "file open error!" << endl;
         exit(1);
     }
 
-    fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(phi[0].data()), fftwcast(phi[0].data()), FFTW_FORWARD, FFTW_MEASURE);
-    fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(phi[0].data()), fftwcast(phi[0].data()), FFTW_BACKWARD, FFTW_MEASURE);
+    fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_FORWARD, FFTW_MEASURE);
+    fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_BACKWARD, FFTW_MEASURE);
 
-    //int n = x2i((1.0 / b) + 0.1);
+    for (int i = 0; i < real.size(); i++){
+        for (int j = 0; j < N; j++){
+            f[j] = phi[i][j];
+        }
+        //int n = x2i((1.0 / b) + 0.1);
 
-    ofs << scientific;
-    for (int i = 0; i <= TN; i++){
-        ofs << i * dt << "\t" << simpson(phi[0]) << endl;
-        timeEvolution(phi[0], plan_for, plan_back);
+        ofs << scientific;
+        for (int j = 0; j <= TN; j++){
+            ofs << j * dt << "\t" << simpson(f) << endl;
+            timeEvolution(f, plan_for, plan_back);
+        }
+        ofs << endl;
     }
 
     fftw_destroy_plan(plan_for);
     fftw_destroy_plan(plan_back);
-
+    ofs.close();
 }
