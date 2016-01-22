@@ -382,3 +382,56 @@ void decayRatio(vvC &phi, vd &real){
 
     cout << endl;
 }
+
+//WKBîÌêœï™ä÷êî
+double f(double x, double E){
+    if (E > V(x)){
+        cout << "x: " << x << "\t" << "E > V(x)" << endl;
+    }
+    return sqrt(2 * (V(x) - E));
+}
+
+//ì]âÒì_   
+void calcTurningPoints(vector<double> &x, double E){
+    //ãÅâ
+    gsl_poly_solve_cubic(-3.0 / (2 * b), 0.0, (3.0 / b)*(1.0 / (6.0*b*b) + E), &x[0], &x[1], &x[2]);
+}
+
+double calcEta(vector<double> &x, double E){
+    double h = (x[2] - x[1]) / N;
+
+    double S_even, S_odd;
+    S_even = S_odd = 0.0;
+
+    for (int i = 1; i < (N / 2) - 1; i++){
+        S_even += f(i2x(2 * i, x[1], h), E);
+    }
+
+    for (int i = 1; i < N / 2; i++){
+        S_odd += f(i2x(2 * i - 1, x[1], h), E);
+    }
+    return h * (f(i2x(0, x[1], h) + 0.001, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
+}
+
+double calcT(double eta){
+    return exp(-2 * eta) / pow(1 + pow(exp(-eta) / 2.0, 2), 2);
+}
+
+void WKB(){
+    ofstream ofs("./output/WKB.txt");
+
+    for (int i = 1; i < EN_real; i++){
+        vector<double> x(3);
+        double E = i2E(E_BEGIN_real, i, dE_imag);
+        calcTurningPoints(x, E);
+        double eta = calcEta(x, E);
+        double T = calcT(eta);
+
+        ofs << fixed;
+        ofs << E << "\t";
+        ofs << scientific;
+        ofs << T / (2.0 * 2.0 * M_PI) << endl;
+    }
+
+    ofs.close();
+}

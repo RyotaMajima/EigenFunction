@@ -47,6 +47,10 @@ int main(){
     //-------’²qU“®q‚Ì‰ğ-------
     getHarmonic();
 
+    //WKB‹ß—
+    WKB();
+
+    //-------Œ¸Š—¦‚©‚ç‚Ì‹••”‚Ì„’è--------
     decayRatio(phi, real);
 
     auto end = system_clock::now();

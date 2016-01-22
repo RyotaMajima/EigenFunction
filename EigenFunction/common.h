@@ -4,6 +4,9 @@
 double i2x(int i){
     return X_BEGIN + i * DELTA_X;
 }
+double i2x(int i, double x1, double h){
+    return x1 + i * h;
+}
 int x2i(double x){
     return (int)((x - X_BEGIN) / DELTA_X);
 }
