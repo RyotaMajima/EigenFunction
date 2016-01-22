@@ -152,7 +152,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
 
     for (int i = 0; i < EN_imag; i++){
         for (int j = 0; j < real.size(); j++){
-            res[i][j] = simpson(B[i][j]);
+            res[i][j] = simpson(B[i][j]) * exp(i2E(E_BEGIN_imag, i, dE_imag(j)) * T_END);
         }
     }
 
@@ -171,6 +171,8 @@ void getImagPart(vector<double> &imag, vector<double> &real){
         ofs << endl;
 
     }
+
+    ofs.close();
 
     //---------gnuplotによるフィッティング-------------
     FILE *gp = _popen("gnuplot.exe", "w");
@@ -232,6 +234,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
     //    ofs << err[i] << "\t";
     //}
     //ofs << endl;
+    //ofs.close();
 }
 
 //固有状態の抽出
