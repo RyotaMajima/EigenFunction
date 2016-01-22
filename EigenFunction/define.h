@@ -30,7 +30,7 @@ inline fftw_complex* fftwcast(Complex* f){ return reinterpret_cast<fftw_complex*
 
 const double X_BEGIN = -5.0, X_END = 25.0; //系の両端
 const double L = X_END - X_BEGIN; //空間幅
-const int N = 1024; //空間分割数
+const int N = 512; //空間分割数
 const double DELTA_X = L / N;
 
 const double T_END = 100; //終了時刻
@@ -43,12 +43,12 @@ const double b = 1.0 / 4.0; //3次ポテンシャルの係数
 const double X_OPT = X_BEGIN + 3.0 * L / 4.0; //光学ポテンシャルをかける位置
 
 const double E_BEGIN_real = -1.0 / (6.0 * b*b), E_END_real = 0.0;
-const int EN_real = 700;
+const int EN_real = 500;
 const double dE_real = (E_END_real - E_BEGIN_real) / EN_real;
 
 const double E_BEGIN_imag = 0.0;
-const vector<double> E_END_imag = { 1.0e-6, 1.0e-3, 1.0e-1 };
+const vector<double> E_END_imag = { 1.0e-5, 1.0e-3, 1.0e-1 };
 const int EN_imag = 500;
-double dE_imag(int i){
-    return (E_END_imag[i] - E_BEGIN_imag) / EN_imag;
+double dE_imag(int idx){
+    return (E_END_imag[idx] - E_BEGIN_imag) / EN_imag;
 }

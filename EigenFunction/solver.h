@@ -128,7 +128,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
         for (int j = 0; j < EN_imag; j++){
             for (int k = 0; k < real.size(); k++){
                 for (int l = 0; l < N; l++){
-                    B[j][k][l] += f[l] * polar(dt, real[k] * (i * dt)) * exp(i2E(E_BEGIN_imag, j, dE_imag) * (i * dt));
+                    B[j][k][l] += f[l] * polar(dt, real[k] * (i * dt)) * exp(i2E(E_BEGIN_imag, j, dE_imag(k)) * (i * dt));
                 }
             }
         }
@@ -143,7 +143,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
     for (int i = 0; i < EN_imag; i++){
         for (int j = 0; j < real.size(); j++){
             for (int k = 0; k < N; k++){
-                B[i][j][k] *= exp(-i2E(E_BEGIN_imag, i, dE_imag[j]) * T_END) / T_END;
+                B[i][j][k] *= exp(-i2E(E_BEGIN_imag, i, dE_imag(j)) * T_END) / T_END;
             }
         }
     }
@@ -163,14 +163,14 @@ void getImagPart(vector<double> &imag, vector<double> &real){
     }
 
     ofs << scientific;
-    for (int i = 0; i < EN_imag; i++){
-        ofs << i2E(E_BEGIN_imag, i, dE_imag) << "\t";
-        for (int j = 0; j < real.size(); j++){
-            ofs << res[i][j] * exp(i2E(E_BEGIN_imag, i, dE_imag) * T_END) << "\t";
+    for (int i = 0; i < real.size(); i++){
+        for (int j = 0; j < EN_imag; j++){
+            ofs << i2E(E_BEGIN_imag, j, dE_imag(i)) << "\t";
+            ofs << res[j][i] << endl;
         }
         ofs << endl;
+
     }
-    ofs.close();
 
     //---------gnuplotによるフィッティング-------------
     FILE *gp = _popen("gnuplot.exe", "w");
@@ -321,7 +321,7 @@ void decayRatio(vvC &phi, vd &real){
 
     ofs << scientific;
     for (int i = 0; i <= TN; i++){
-        ofs << i * dt << "\t" << simpson(phi[0], n) << endl;;
+        ofs << i * dt << "\t" << simpson(phi[0], n) << endl;
         timeEvolution(phi[0], plan_for, plan_back);
     }
 
