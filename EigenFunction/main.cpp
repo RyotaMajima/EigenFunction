@@ -39,12 +39,12 @@ int main(){
     vd imag(real.size());
     getImagPart(imag, real);
 
-    ////-------固有関数の抽出-------
-    //vvC phi(real.size(), vC(N));
-    //getEigenfunction(phi, real, imag);
+    //-------固有関数の抽出-------
+    vvC phi(real.size(), vC(N));
+    getEigenfunction(phi, real, imag);
 
-    ////-------調子振動子の解-------
-    //getHarmonic();
+    //-------調子振動子の解-------
+    getHarmonic();
 
     //decayRatio(phi, real);
 

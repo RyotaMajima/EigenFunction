@@ -11,7 +11,7 @@ set xlab "$\\varepsilon^{I} / \\hbar \\omega$"
 set ylab "$|| \\Phi_{T}(\\varepsilon^{I}) ||^{2}$" offset -2,0
 set format x "%.1e"
 set format y "%.5f"
-#set logscale x
+set logscale x
 set key spacing 1.3
 set key left
 

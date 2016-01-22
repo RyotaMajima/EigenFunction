@@ -262,6 +262,7 @@ void getEigenfunction(vvC &phi, vd &real, vd &imag){
 
         //Ä‹KŠi‰»
         double tmp = simpson(phi[i]);
+        cout << tmp << endl;
 
         for (int j = 0; j < N; j++){
             phi[i][j] = norm(phi[i][j]) / tmp;
