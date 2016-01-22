@@ -1,7 +1,7 @@
 unset multiplot; reset
 
 #set ter tikz stand size 297mm,210mm font ",12"
-#set output "./output/graph.tex"
+#set output "./graph/WKB.tex"
 set multiplot layout 1,2
 
 load './params.txt'
@@ -48,7 +48,7 @@ if(peakNum > 2){
 	set label 6 point pt 6 ps 3 lc rgb "green" at ER2,lambda2
 }
 
-pl "./output/T.txt" ti "" w l lc rgb "black"
+pl "./output/WKB.txt" ti "" w l lc rgb "black"
 
 unset multiplot
 set output

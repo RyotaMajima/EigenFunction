@@ -422,7 +422,7 @@ void WKB(){
 
     for (int i = 1; i < EN_real; i++){
         vector<double> x(3);
-        double E = i2E(E_BEGIN_real, i, dE_imag);
+        double E = i2E(E_BEGIN_real, i, dE_real);
         calcTurningPoints(x, E);
         double eta = calcEta(x, E);
         double T = calcT(eta);
