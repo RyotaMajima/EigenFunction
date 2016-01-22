@@ -222,18 +222,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
         cout << " %" << ")" << endl;
     }
 
-    //ofs.open("./output/error.txt", ios::app);
-    //if (!ofs){
-    //    cerr << "file open error!" << endl;
-    //    exit(1);
-    //}
-
-    //ofs << T_END << "\t";
-    //for (int i = 0; i < real.size(); i++){
-    //    ofs << err[i] << "\t";
-    //}
-    //ofs << endl;
-    //ofs.close();
+    cout << endl;
 }
 
 //固有状態の抽出
@@ -326,17 +315,68 @@ void decayRatio(vvC &phi, vd &real){
         for (int j = 0; j < N; j++){
             f[j] = phi[i][j];
         }
-        //int n = x2i((1.0 / b) + 0.1);
+        int n = x2i((1.0 / b) + 3.0);
 
         ofs << scientific;
         for (int j = 0; j <= TN; j++){
             ofs << j * dt << "\t" << simpson(f) << endl;
             timeEvolution(f, plan_for, plan_back);
         }
-        ofs << endl;
+        ofs << endl << endl;
     }
 
     fftw_destroy_plan(plan_for);
     fftw_destroy_plan(plan_back);
     ofs.close();
+
+    //---------gnuplotによるフィッティング-------------
+    FILE *gp = _popen("gnuplot.exe", "w");
+
+    fprintf(gp, "load 'fit_decay.plt'\n");
+    fflush(gp);
+    _pclose(gp);
+
+    ifstream ifs;
+
+    //フィッティング結果の取得
+    ifs.open("./output/fit_result_decay.txt");
+    if (!ifs){
+        cerr << "file open error!" << endl;
+        exit(1);
+    }
+
+    vd err(real.size()), lambda(real.size()); //フィッティングの誤差
+
+    for (int i = 0; i < real.size(); i++){
+        ifs >> lambda[i] >> err[i];
+    }
+    //--------------------------------------------------
+
+    //フィッティング誤差を％に直す
+    for (int i = 0; i < real.size(); i++){
+        err[i] = (err[i] / lambda[i]) * 100;
+    }
+
+    //---------------gnuplot用追加書き込み----------------
+    ofs.open("params.txt", ios_base::app);
+    for (int i = 0; i < real.size(); i++){
+        ofs << scientific;
+        ofs << "lambda" << i << " = " << lambda[i] << endl;
+        ofs << fixed;
+        ofs << "lambda_err" << i << " = " << err[i] << endl;
+    }
+    ofs.close();
+    //----------------------------------------------------
+
+    //decay rateの表示
+    cout << "--------decay rate--------" << endl << endl;
+    for (int i = 0; i < real.size(); i++){
+        cout << scientific;
+        cout << "lambda" << i << " = " << lambda[i];
+        cout << fixed;
+        cout << " (" << "+/- " << err[i];
+        cout << " %" << ")" << endl;
+    }
+
+    cout << endl;
 }

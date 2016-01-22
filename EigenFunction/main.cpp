@@ -24,6 +24,7 @@ int main(){
     //-----gnuplot用パラメータ書き込み-----
     ofs.open("params.txt");
     ofs << "T = " << T_END << endl;
+    ofs << "TN = " << TN << endl;
     ofs << "N = " << N << endl;
     ofs << "b = " << b << endl;
     ofs.close();

@@ -1,26 +1,35 @@
 unset multiplot; reset
 
-
-
 #set ter tikz standalone
 #set output ""
 
+load "params.txt"
 set multiplot layout 2,1
 
 
 set grid lw 2
+set xran [0:T]
 set yran [0:1]
 
 set ls 1 lc rgb "red" lw 2
+set ls 2 lc rgb "navy" ps 2
 
+f(x) = a * exp(-2*b*x)
+a = 1e-10; b = 1e-10
+set fit results
 
-pl "./output/decay.txt" every :::0::0 ti "" w l ls 1
+fit f(x) "./output/decay.txt" index 0 every 100 via a,b
+set title sprintf("ground state $\\lambda = %.4e$", lambda0)
+pl f(x) ti "fitting curve" ls 1, "" index 0 every 100 ti "data" ls 2
 
-pl "" every :::1::1 ti "" w l ls 1
-
+if(peakNum > 1){
+	a = 1e-10; b = 1e-10
+	fit f(x) "./output/decay.txt" index 1 every 100 via a,b
+	set title sprintf("first excited state $\\lambda = %.4e$", lambda1)
+	pl f(x) ti "fitting curve" ls 1, "" index 1 every 100 ti "data" ls 2
+}
 
 unset multiplot
 
 set ter pop
-
 reset
