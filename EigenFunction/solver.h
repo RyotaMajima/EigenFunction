@@ -337,10 +337,8 @@ void decayRatio(vvC &phi, vd &real){
     fflush(gp);
     _pclose(gp);
 
-    ifstream ifs;
-
     //フィッティング結果の取得
-    ifs.open("./output/fit_result_decay.txt");
+    ifstream ifs("./output/fit_result_decay.txt");
     if (!ifs){
         cerr << "file open error!" << endl;
         exit(1);
@@ -354,6 +352,19 @@ void decayRatio(vvC &phi, vd &real){
 
     ifs.close();
     //--------------------------------------------------
+
+    ofs.open("./output/eigenValueDecay.txt");
+    if (!ofs){
+        cerr << "file open error!" << endl;
+        exit(1);
+    }
+
+    ofs << scientific;
+    for (int i = 0; i < real.size(); i++){
+        ofs << real[i] << "\t" << lambda[i] << endl;
+    }
+
+    ofs.close();
 
     //フィッティング誤差を％に直す
     for (int i = 0; i < real.size(); i++){
@@ -392,12 +403,13 @@ double f(double x, double E){
     return sqrt(2 * (V(x) - E));
 }
 
-//転回点   
+//転回点の計算 
 void calcTurningPoints(vector<double> &x, double E){
     //求解
     gsl_poly_solve_cubic(-3.0 / (2 * b), 0.0, (3.0 / b)*(1.0 / (6.0*b*b) + E), &x[0], &x[1], &x[2]);
 }
 
+//Gamov因子の計算
 double calcEta(vector<double> &x, double E){
     double h = (x[2] - x[1]) / N;
 
@@ -414,10 +426,12 @@ double calcEta(vector<double> &x, double E){
     return h * (f(i2x(0, x[1], h) + 0.001, E) + 2 * S_even + 4 * S_odd + f(i2x(N - 1, x[1], h), E)) / 3.0;
 }
 
+//トンネル確率の計算
 double calcT(double eta){
     return exp(-2 * eta) / pow(1 + pow(exp(-eta) / 2.0, 2), 2);
 }
 
+//寿命の逆数のプロット
 void WKB(){
     ofstream ofs("./output/WKB.txt");
 

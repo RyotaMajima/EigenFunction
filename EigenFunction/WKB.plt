@@ -35,20 +35,33 @@ set format y "%.1e"
 set grid lw 2
 set xlab "$E$"; set ylab "$\\tau^{-1}$"
 
+set ls 1 pt 1 ps 3
+set ls 2 pt 6 ps 3
 
-set label 1 point pt 1 ps 3 lc rgb "red" at ER0,abs(EI0)
-set label 2 point pt 6 ps 3 lc rgb "red" at ER0,lambda0
+FIT = "./output/eigenValueFit.txt"
+DECAY = "./output/eigenValueDecay.txt"
 
-if(peakNum > 1){
-	set label 3 point pt 1 ps 3 lc rgb "blue" at ER1,abs(EI1)
-	set label 4 point pt 6 ps 3 lc rgb "blue" at ER1,lambda1
+if(peakNum == 1){
+	pl FIT us 1:(abs($2)) every ::0::0 ti ""  w p ls 1 lc rgb "red", \
+ 	 DECAY every ::0::0 ti ""  w p ls 2 lc rgb "red", \
+ 	 "./output/WKB.txt" ti "" w l lc rgb "black"
 }
-if(peakNum > 2){
-	set label 5 point pt 1 ps 3 lc rgb "green" at ER2,abs(EI2)
-	set label 6 point pt 6 ps 3 lc rgb "green" at ER2,lambda2
+if(peakNum == 2){
+	pl FIT us 1:(abs($2)) every ::0::0 ti ""  w p ls 1 lc rgb "red", \
+	 DECAY every ::0::0 ti ""  w p ls 2 lc rgb "red", \
+	 FIT every ::1::1 ti ""  w p ls 1 lc rgb "blue", \
+	 DECAY every ::1::1 ti ""  w p ls 2 lc rgb "blue", \
+	 "./output/WKB.txt" ti "" w l lc rgb "black"
 }
-
-pl "./output/WKB.txt" ti "" w l lc rgb "black"
+if(peakNum == 3){
+	pl FIT us 1:(abs($2)) every ::0::0 ti ""  w p ls 1 lc rgb "red", \
+	 DECAY every ::0::0 ti "" w p ls 2 lc rgb "red", \
+	 FIT every ::1::1 ti ""  w p ls 1 lc rgb "blue", \
+	 DECAY every ::1::1 ti ""  w p ls 2 lc rgb "blue", \
+	 FIT every ::2::2 ti ""  w p ls 1 lc rgb "green", \
+	 DECAY every ::2::2 ti ""  w p ls 2 lc rgb "green", \
+	 "./output/WKB.txt" ti "" w l lc rgb "black"
+}
 
 unset multiplot
 set output

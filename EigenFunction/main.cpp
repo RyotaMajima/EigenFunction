@@ -42,6 +42,20 @@ int main(){
     vd imag(real.size());
     getImagPart(imag, real);
 
+    //波束の時間発展から求めた複素固有値の書き込み
+    ofs.open("./output/eigenValueFit.txt");
+    if (!ofs){
+        cerr << "file open error!" << endl;
+        exit(1);
+    }
+
+    ofs << scientific;
+    for (int i = 0; i < real.size(); i++){
+        ofs << real[i] << "\t" << imag[i] << endl;
+    }
+
+    ofs.close();
+
     //-------固有関数の抽出-------
     vvC phi(real.size(), vC(N));
     getEigenfunction(phi, real, imag);
