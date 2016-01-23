@@ -232,6 +232,13 @@ void getEigenfunction(vvC &phi, vd &real, vd &imag){
     fftw_plan plan_for = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_FORWARD, FFTW_MEASURE);
     fftw_plan plan_back = fftw_plan_dft_1d(N, fftwcast(f.data()), fftwcast(f.data()), FFTW_BACKWARD, FFTW_MEASURE);
 
+    ofstream ofs("./output/phi.txt");
+    if (!ofs){
+        cerr << "file open error!" << endl;
+        exit(1);
+    }
+    ofs << scientific;
+
     for (int i = 0; i < real.size(); i++){
         init(f); //‰Šú‰»
 
@@ -250,27 +257,20 @@ void getEigenfunction(vvC &phi, vd &real, vd &imag){
 
         //Ä‹KŠi‰»
         double tmp = simpson(phi[i]);
-
         for (int j = 0; j < N; j++){
             phi[i][j] = phi[i][j] / sqrt(tmp);
         }
 
-        string filename = "./output/phi" + to_string(i) + ".txt";
-
-        ofstream ofs(filename);
-        if (!ofs){
-            cerr << "file open error!" << endl;
-            exit(1);
-        }
-
-        ofs << scientific;
+        //ƒtƒ@ƒCƒ‹‘‚«ž‚Ý
         for (int j = 0; j < N; j++){
             ofs << i2x(j) << "\t";
-            ofs << V(i2x(j)) << "\t";
             ofs << norm(phi[i][j]) << endl;
         }
+
+        ofs << endl << endl; //for data index
     }
 
+    ofs.close();
     fftw_destroy_plan(plan_for);
     fftw_destroy_plan(plan_back);
 }
@@ -291,7 +291,8 @@ void getHarmonic(){
 
     ofs << scientific;
     for (int i = 0; i < N; i++){
-        ofs << i2x(i) << "\t";
+        double x = i2x(i);
+        ofs << x << "\t" << V(x) << "\t";
         ofs << norm(ho[0][i]) << "\t";
         ofs << norm(ho[1][i]) << endl;
     }
