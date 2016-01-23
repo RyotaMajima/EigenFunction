@@ -39,7 +39,7 @@ const double dt = T_END / TN; //時間刻み幅
 
 const double S = 0.9; //波束の幅
 const double X = -0.5; //初期波束の原点からのずれ
-const double b = 1.0 / 3.0; //3次ポテンシャルの係数
+const double b = 1.0 / 2.0; //3次ポテンシャルの係数
 const double X_OPT = X_BEGIN + 3.0 * L / 4.0; //光学ポテンシャルをかける位置
 
 //実部の範囲(WKB近似含む)
@@ -48,15 +48,16 @@ const int EN_real = 500;
 const double dE_real = (E_END_real - E_BEGIN_real) / EN_real;
 
 //虚部の範囲
-const double E_BEGIN_imag = 1.0e-3;
-const double E_END_imag = 1.0e-1;
+const double E_BEGIN_imag = 1.0e-4;
+const double E_END_imag = 1.0e-2;
 const int EN_imag = 500;
 const double dE_imag =(E_END_imag - E_BEGIN_imag) / EN_imag;
 
 /*
 b = 1/4 :
-    6.0e-8 ~ 1.0e-4, T = 100
+    (6.0e-8 ~ 1.0e-4, T = 100)
     5.0e-9 ~ 1.0e-4, T = 200
 b = 1/3 :
+    1.0e-4 ~ 1.0e-2, N = 1024
 b = 1/2 :
 */
