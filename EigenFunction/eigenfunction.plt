@@ -29,7 +29,7 @@ if(peakNum > 1){
 	set ylab "$|| \\varphi_{1}(x) ||^{2}$"
 	set title sprintf("$E_{1} = %.3f - %.6f i$", ER1, abs(EI1))
 	pl "./output/ho.txt" us 1:2 ti "V(x)" w l ls 1, \
-	 "" us 1:3 ti "" w l ls 3 dt 3, \
+	 "" us 1:4 ti "" w l ls 3 dt 3, \
 	 "./output/phi.txt" index 1 ti "2nd peak" w filledcur ls 3
 }
 
