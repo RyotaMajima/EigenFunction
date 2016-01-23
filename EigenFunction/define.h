@@ -33,7 +33,7 @@ const double L = X_END - X_BEGIN; //‹óŠÔ•
 const int N = 512; //‹óŠÔ•ªŠ„”
 const double DELTA_X = L / N;
 
-const double T_END = 100; //I—¹
+const double T_END = 200; //I—¹
 const int TN = T_END * 100; //ŠÔ•ªŠ„”
 const double dt = T_END / TN; //ŠÔ‚İ•
 
@@ -48,7 +48,13 @@ const int EN_real = 500;
 const double dE_real = (E_END_real - E_BEGIN_real) / EN_real;
 
 //‹••”‚Ì”ÍˆÍ
-const double E_BEGIN_imag = 1.0e-8;
+const double E_BEGIN_imag = 6.0e-8;
 const double E_END_imag = 1.0e-4;
 const int EN_imag = 500;
 const double dE_imag =(E_END_imag - E_BEGIN_imag) / EN_imag;
+
+/*
+b = 1/4 : 6.0e-8 ~ 1.0e-4, T = 200
+b = 1/3 :
+b = 1/2 :
+*/
