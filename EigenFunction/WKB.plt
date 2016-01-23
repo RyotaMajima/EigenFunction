@@ -1,6 +1,6 @@
 unset multiplot; reset
 
-#set ter tikz stand size 297mm,210mm font ",12"
+#set ter tikz stand size 15cm,10.5cm font ",12"
 #set output "./graph/WKB.tex"
 set multiplot layout 1,2
 
@@ -12,15 +12,14 @@ set ls 2 lc rgb "black" dt (10,20)
 set xran [-4:1/b + 1]; set yran [-1/(6 * b*b)-1:2]
 set xlab "$x$"; set ylab "$E$"
 set zeroaxis
-set key bottom
 
-set arrow 1 from first -3,ER0 to 3,ER0 nohead lc rgb "red"
+set arrow 1 from first -3,ER0 to 3,ER0 nohead lc rgb "red" lw 2
 if(peakNum > 1){
-	set arrow 2 from first -3,ER1 to 3,ER1 nohead lc rgb "blue"
+	set arrow 2 from first -3,ER1 to 3,ER1 nohead lc rgb "blue" lw 2
 }
 
 if(peakNum > 2){
-	set arrow 3 from first -3,ER2 to 3,ER2 nohead lc rgb "green"
+	set arrow 3 from first -3,ER2 to 3,ER2 nohead lc rgb "green" lw 2
 }
 
 V(x) = (1.0 / 2) * x**2 - (b / 3) * x**3 - 1 / (6*b**2)
@@ -32,7 +31,7 @@ pl V(x) ti "$V(x)$" ls 1,\
 unset arrow
 set xran [*:*]; set yran [*:*]
 set logscale y
-set format y "%.1e"
+set format y "$10^{%L}$"
 set grid lw 2
 set xlab "$E$"; set ylab "$\\tau^{-1}$"
 
@@ -41,6 +40,11 @@ set ls 2 pt 6 ps 3
 
 FIT = "./output/eigenValueFit.txt"
 DECAY = "./output/eigenValueDecay.txt"
+
+set label 1 "from fitting" right at graph 0.8,0.2
+set label 2 "from norm" right at graph 0.8, 0.1
+set label 3 point ls 1 center at graph 0.9,0.2
+set label 4 point ls 2 center at graph 0.9,0.1
 
 if(peakNum == 1){
 	pl FIT us 1:(abs($2)) every ::0::0 ti ""  w p ls 1 lc rgb "red", \
