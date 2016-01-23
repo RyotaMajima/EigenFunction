@@ -2,8 +2,8 @@ unset multiplot; reset
 
 load "./params.txt"
 
-set term tikz standalone size 14cm,6cm
-set output "./graph/real.tex"
+#set term tikz standalone size 14cm,6cm
+#set output "./graph/real.tex"
 
 set yran [0:1]
 set xlab "$\\varepsilon^{R} / \\hbar \\omega$"
