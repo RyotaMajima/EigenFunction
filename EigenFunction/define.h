@@ -33,13 +33,13 @@ const double L = X_END - X_BEGIN; //空間幅
 const int N = 512; //空間分割数
 const double DELTA_X = L / N;
 
-const double T_END = 100; //終了時刻
+const double T_END = 200; //終了時刻
 const int TN = T_END * 100; //時間分割数
 const double dt = T_END / TN; //時間刻み幅
 
 const double S = 0.9; //波束の幅
 const double X = -0.5; //初期波束の原点からのずれ
-const double b = 1.0 / 2.5; //3次ポテンシャルの係数
+const double b = 1.0 / 3.0; //3次ポテンシャルの係数
 const double X_OPT = X_BEGIN + 3.0 * L / 4.0; //光学ポテンシャルをかける位置
 
 //実部の範囲(WKB近似含む)

@@ -17,13 +17,8 @@ double i2E(double begin, int index, double width){
     return begin + index * width;
 }
 
-//üŒ`‚İ
-template<class T> inline T GetValueLin(T MinVal, T MaxVal, int Step, int s){
-    return MinVal + (MaxVal - MinVal)*s / (Step - 1);
-}
-
 //‘Î”‚İ
-template<class T> inline T GetValueLog(T MinVal, T MaxVal, int Step, int s){
+inline double GetValueLog(double MinVal, double MaxVal, int Step, int s){
     return exp(log(MinVal) + (log(MaxVal) - log(MinVal))*s / (Step - 1));
 }
 

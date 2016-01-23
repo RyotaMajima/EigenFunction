@@ -324,10 +324,10 @@ void decayRatio(vvC &phi, vd &real){
         }
         ofs << endl << endl;
     }
+    ofs.close();
 
     fftw_destroy_plan(plan_for);
     fftw_destroy_plan(plan_back);
-    ofs.close();
 
     //---------gnuplotによるフィッティング-------------
     FILE *gp = _popen("gnuplot.exe", "w");
