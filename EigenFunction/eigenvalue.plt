@@ -1,9 +1,11 @@
 unset multiplot; reset
 
-load "./params.txt"
+#set ter tikz standalone size 15cm,10cm
+#set output "./graph/eigenvalue.tex"
 
-set term tikz standalone size 14cm,6cm
-set output "./graph/real.tex"
+set multiplot
+set size 1.0,0.5
+set origin 0.0,0.5
 
 set yran [0:1]
 set xlab "$\\varepsilon^{R} / \\hbar \\omega$"
@@ -22,10 +24,16 @@ if(peakNum > 2){
  set arrow 3 from first ER2,ER2_val+0.15 to ER2,ER2_val+0.01
 }
 
-
 set label 4 sprintf("$T = %.0f$", T) right at graph 0.9,0.9
 
 pl "./output/energy_peak_real.txt" ti "" w l lc rgb "red" lw 2
 
+
+
+reset
+
+
+unset multiplot
 set output
-set term pop
+set ter pop
+reset
