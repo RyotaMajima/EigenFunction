@@ -4,13 +4,13 @@ unset multiplot; reset
 #set output "./graph/WKB.tex"
 set multiplot layout 1,2
 
-load './params.txt'
+load "params.txt"
 
 set ls 1 lc rgb "black" lw 2
 set ls 2 lc rgb "black" dt (10,20)
 
 set xran [-4:1/b + 1]; set yran [-1/(6 * b*b)-1:2]
-set xlab "$x$"
+set xlab "$x$"; set ylab "$E$"
 set zeroaxis
 
 set arrow 1 from first -3,ER0 to 3,ER0 nohead lc rgb "red"

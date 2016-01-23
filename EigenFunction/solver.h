@@ -176,7 +176,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
     //---------gnuplotによるフィッティング-------------
     FILE *gp = _popen("gnuplot.exe", "w");
 
-    fprintf(gp, "load 'fit.plt'\n");
+    fprintf(gp, "load 'fit_imag.plt'\n");
     fflush(gp);
     _pclose(gp);
 
@@ -245,7 +245,6 @@ void getEigenfunction(vvC &phi, vd &real, vd &imag){
         }
 
         for (auto &val : phi[i]){
-            //val *= exp(-fabs(imag[i]) * T_END) / T_END;
             val /= T_END;
         }
 
@@ -255,8 +254,6 @@ void getEigenfunction(vvC &phi, vd &real, vd &imag){
         for (int j = 0; j < N; j++){
             phi[i][j] = phi[i][j] / sqrt(tmp);
         }
-
-        //cout << simpson(phi[i]) << endl;
 
         string filename = "./output/phi" + to_string(i) + ".txt";
 
@@ -315,11 +312,14 @@ void decayRatio(vvC &phi, vd &real){
         for (int j = 0; j < N; j++){
             f[j] = phi[i][j];
         }
+
         int n = x2i((1.0 / b) + 3.0);
 
         ofs << scientific;
         for (int j = 0; j <= TN; j++){
-            ofs << j * dt << "\t" << simpson(f, n) << endl;
+            if (j % 100 == 0){
+                ofs << j * dt << "\t" << simpson(f, n) << endl;
+            }
             timeEvolution(f, plan_for, plan_back);
         }
         ofs << endl << endl;
