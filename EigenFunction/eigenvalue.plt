@@ -1,37 +1,62 @@
 unset multiplot; reset
 
-#set ter tikz standalone size 15cm,10cm
-#set output "./graph/eigenvalue.tex"
+set ter tikz standalone size 15cm,10cm font ",8"
+set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/eigenvalue.tex'
 
 set multiplot
-set size 1.0,0.5
-set origin 0.0,0.5
+set size 1.0,0.4
+set origin 0.0,0.6
 
-set yran [0:1]
+set yran [0:0.3]
 set xlab "$\\varepsilon^{R} / \\hbar \\omega$"
-set ylab "$|| \\Phi_{T}(\\varepsilon^{R}) ||^{2}$"
+set ylab "$|| \\Phi_{T}(\\varepsilon^{R}) ||^{2}$" offset -1,0
+set ytics 0.1
 
-set label 1 sprintf("$E_{0}^{R} = %.3f$", ER0) center at first ER0,ER0_val+0.2
-set arrow 1 from first ER0,ER0_val+0.15 to ER0,ER0_val+0.01
+set label 1 sprintf("$E_{0}^{R} = %.3f$", ER0) center at first ER0,ER0_val+0.1
+set arrow 1 from first ER0,ER0_val+0.08 to ER0,ER0_val+0.01
 
 if(peakNum > 1){
- set label 2 sprintf("$E_{1}^{R} = %.3f$", ER1) center at first ER1,ER1_val+0.2
- set arrow 2 from first ER1,ER1_val+0.15 to ER1,ER1_val+0.01
+ set label 2 sprintf("$E_{1}^{R} = %.3f$", ER1) center at first ER1,ER1_val+0.1
+ set arrow 2 from first ER1,ER1_val+0.08 to ER1,ER1_val+0.01
 }
-
-if(peakNum > 2){
- set label 3 sprintf("$E_{2}^{R} = %.3f$", ER2) center at first ER2,ER2_val+0.2
- set arrow 3 from first ER2,ER2_val+0.15 to ER2,ER2_val+0.01
-}
-
-set label 4 sprintf("$T = %.0f$", T) right at graph 0.9,0.9
 
 pl "./output/energy_peak_real.txt" ti "" w l lc rgb "red" lw 2
 
-
-
 reset
 
+set size 0.5,0.6
+set origin 0.0,0.0
+
+set xlab "$\\varepsilon^{I} / \\hbar \\omega$"
+set ylab "$|| \\Phi_{T}(\\varepsilon^{I}) ||^{2}$" offset -2,0
+set format x "$10^{%L}$"
+set format y "%.2f"
+set ytics 0.1
+set logscale x
+set key spacing 1.5
+set key left
+
+
+f(x) = a * ((exp((x - b) * T) - 1)/((x - b) * T))**2 * exp(-1 * x * T)
+
+set fit quiet
+
+a = 1e-10; b = 1e-10
+fit f(x) "./output/energy_imag.txt" us 1:2 via a,b
+set title sprintf("$E_{0}^{R} = %.3f$ ($T = %.0f$)", ER0, T)
+#set label 1 sprintf("$E_{0}^{I}$ = %.3e", b) left at graph 0.1,0.8
+pl f(x) ti "fitting curve" lc rgb "red", "" us 1:2 every 20 ti "data" lc rgb "navy"
+
+set origin 0.5,0.0
+set ytics 0.01
+
+if(peakNum > 1){
+	a = 1e-10; b = 1e-10
+	fit f(x) "./output/energy_imag.txt" us 1:3 via a,b
+	set title sprintf("$E_{1}^{R} = %.3f$ ($T = %.0f$)", ER1, T)
+	#set label 1 sprintf("$E_{1}^{I}$ = %.3e", b) left at graph 0.1,0.8
+	pl f(x) ti "fitting curve" lc rgb "red", "" us 1:3 every 20 ti "data" lc rgb "navy"
+}
 
 unset multiplot
 set output
