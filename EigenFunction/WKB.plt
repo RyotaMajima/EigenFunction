@@ -13,7 +13,7 @@ set xran [-3:1/b + 1]; set yran [-1/(6 * b*b)-1:2]
 set xlab "$x$"; set ylab "$E / \\hbar \\omega$"
 set zeroaxis
 
-set arrow 1 from first -0.9,ER0 to 1.1,ER0 nohead lc rgb "red" lw 2
+set arrow 1 from first -0.82,ER0 to 1.2,ER0 nohead lc rgb "red" lw 2
 if(peakNum > 1){
 	set arrow 2 from first -1.5,ER1 to 2.07,ER1 nohead lc rgb "blue" lw 2
 }
