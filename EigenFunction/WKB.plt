@@ -1,7 +1,7 @@
 unset multiplot; reset
 
 #set ter tikz stand size 15cm,10cm
-#set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/WKB4.tex'
+#set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/WKB2.tex'
 set multiplot layout 1,2
 
 load "params.txt"
@@ -15,11 +15,11 @@ set zeroaxis
 
 set arrow 1 from first -0.9,ER0 to 1.1,ER0 nohead lc rgb "red" lw 2
 if(peakNum > 1){
-	set arrow 2 from first -1.4,ER1 to 2.35,ER1 nohead lc rgb "blue" lw 2
+	set arrow 2 from first -1.5,ER1 to 2.07,ER1 nohead lc rgb "blue" lw 2
 }
 
 if(peakNum > 2){
-	set arrow 3 from first -3,ER2 to 3,ER2 nohead lc rgb "green" lw 2
+	set arrow 3 from first -1.85,ER2 to 3,ER2 nohead lc rgb "green" lw 2
 }
 
 V(x) = (1.0 / 2) * x**2 - (b / 3) * x**3 - 1 / (6*b**2)
