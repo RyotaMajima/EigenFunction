@@ -433,7 +433,7 @@ double calcT(double eta){
 
 //õ–½‚Ì‹t”‚Ìƒvƒƒbƒg
 void WKB(){
-    ofstream ofs("./output/WKB.txt");
+    ofstream ofs("./output/WKB4.txt");
 
     for (int i = 1; i < EN_real; i++){
         vector<double> x(3);

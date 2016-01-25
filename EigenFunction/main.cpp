@@ -43,7 +43,7 @@ int main(){
     getImagPart(imag, real);
 
     //”g‘©‚ÌŠÔ”­“W‚©‚ç‹‚ß‚½•¡‘fŒÅ—L’l‚Ì‘‚«‚İ
-    ofs.open("./output/eigenValueFit.txt");
+    ofs.open("./output/eigenValueFit4.txt");
     if (!ofs){
         cerr << "file open error!" << endl;
         exit(1);
