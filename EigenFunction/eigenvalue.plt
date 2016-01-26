@@ -12,6 +12,7 @@ set yran [0:0.3]
 set xlab "$\\varepsilon^{R} / \\hbar \\omega$"
 set ylab "$|| \\Phi_{T}(\\varepsilon^{R}) ||^{2}$" offset -1,0
 set ytics 0.1
+set tics nomirror
 
 set label 1 sprintf("$E_{0}^{R} = %.3f$", ER0) center at first ER0,ER0_val+0.1
 set arrow 1 from first ER0,ER0_val+0.08 to ER0,ER0_val+0.01
@@ -29,10 +30,11 @@ set size 0.5,0.6
 set origin 0.0,0.0
 
 set xlab "$\\varepsilon^{I} / \\hbar \\omega$"
-set ylab "$|| \\Phi_{T}(\\varepsilon^{I}) ||^{2}$" offset -2,0
+set ylab "$|| \\Phi_{T}(\\varepsilon^{I}) ||^{2}$" offset -1,0
 set format x "$10^{%L}$"
 set format y "%.2f"
-set ytics 0.1
+set ytics 0.1; unset mxtics
+set tics nomirror
 set logscale x
 set key spacing 2
 set key left

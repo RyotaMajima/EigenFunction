@@ -13,6 +13,7 @@ set ls 2 lc rgb "black" dt (10,20)
 set xran [-3:1/b + 1]; set yran [-1/(6 * b*b)-1:2]
 set xlab "$x$"; set ylab "$E / \\hbar \\omega$"
 set zeroaxis
+unset key
 
 set arrow 1 from first -0.9,ER0 to 1.1,ER0 nohead lc rgb "red" lw 2
 
@@ -32,10 +33,11 @@ pl V(x) ti "$V(x)$" ls 1,\
 
 unset arrow
 set xran [*:*]; set yran [*:*]
-set logscale y
-set xtics 0.4
-set format y "$10^{%L}$"
 set grid lw 2
+set tics font ",9"
+set xtics 0.4
+unset mytics; set ytics nomirror
+set logscale y; set format y "$10^{%L}$"
 set xlab "$E / \\hbar \\omega$"; set ylab "$\\tau^{-1}$"
 
 set ls 1 pt 1 ps 3
@@ -43,7 +45,7 @@ set ls 1 pt 1 ps 3
 FIT = "./output/eigenValueFit3.txt"
 
 set label 1 "from fitting" right at graph 0.8,0.15
-set label 3 point ls 1 center at graph 0.9,0.15
+set label 2 point ls 1 center at graph 0.9,0.15
 
 if(peakNum == 1){
 	pl FIT us 1:(abs($2)) every ::0::0 ti ""  w p ls 1 lc rgb "red", \

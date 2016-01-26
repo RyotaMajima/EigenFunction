@@ -1,16 +1,17 @@
 unset multiplot; reset
 
-set ter tikz stand size 15cm,10cm
-set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\slide\graph_slide/WKB_norm.tex'
+#set ter tikz stand size 15cm,10cm
+#set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\slide\graph_slide/WKB_norm.tex'
 #set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/WKB.tex'
-
 set multiplot layout 1,3
 
-set logscale y
+set logscale y; unset mytics
 set format y "$10^{%L}$"
 set grid lw 2
 set ytics nomirror
 set xlab "$E / \\hbar \\omega$"; set ylab "$\\tau^{-1}$"
+set tmar 2
+set tics font ",9"
 
 set ls 1 lc rgb "black"
 set ls 2 pt 1 ps 3
@@ -20,6 +21,9 @@ set label 1 "from fitting" left at graph 0.2,0.15
 set label 2 "from norm" left at graph 0.2,0.1
 set label 3 point ls 2 ps 2 lc rgb "black" at graph 0.92,0.15
 set label 4 point ls 3 ps 2 lc rgb "black" at graph 0.92,0.1
+set label 5 "shallow" right at screen 0.24,0.98
+set label 6 "deep" left at screen 0.84,0.98
+set arrow 1 from screen 0.25,0.98 to screen 0.83,0.98
 
 FIT2 = "./output/eigenValueFit2.txt"
 FIT3 = "./output/eigenValueFit3.txt"
