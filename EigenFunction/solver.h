@@ -353,7 +353,7 @@ void decayRatio(vvC &phi, vd &real){
     ifs.close();
     //--------------------------------------------------
 
-    ofs.open("./output/eigenValueDecay2.txt");
+    ofs.open("./output/eigenValueDecay3.txt");
     if (!ofs){
         cerr << "file open error!" << endl;
         exit(1);
@@ -433,7 +433,7 @@ double calcT(double eta){
 
 //Žõ–½‚Ì‹t”‚Ìƒvƒƒbƒg
 void WKB(){
-    ofstream ofs("./output/WKB2.txt");
+    ofstream ofs("./output/WKB3.txt");
 
     for (int i = 1; i < EN_real; i++){
         vector<double> x(3);
