@@ -1,6 +1,7 @@
 unset multiplot; reset
 
 #set ter tikz standalone size 15cm,10cm font ",8"
+#set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\slide\graph_slide/eigenvalue.tex'
 #set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/eigenvalue.tex'
 
 set multiplot
@@ -33,9 +34,8 @@ set format x "$10^{%L}$"
 set format y "%.2f"
 set ytics 0.1
 set logscale x
-set key spacing 1.5
+set key spacing 2
 set key left
-
 
 f(x) = a * ((exp((x - b) * T) - 1)/((x - b) * T))**2 * exp(-1 * x * T)
 
@@ -44,6 +44,7 @@ set fit quiet
 a = 1e-10; b = 1e-10
 fit f(x) "./output/energy_imag.txt" us 1:2 via a,b
 set title sprintf("$E_{0}^{R} = %.3f$ ($T = %.0f$)", ER0, T)
+set label 1 sprintf("$E_{0}^{I}$ = %.3e", b) left at graph 0.05,0.7
 pl f(x) ti "fitting curve" lc rgb "red" lw 2, \
  "" us 1:2 every 20 ti "data" lc rgb "navy" ps 2
 
@@ -54,7 +55,7 @@ if(peakNum > 1){
 	a = 1e-10; b = 1e-10
 	fit f(x) "./output/energy_imag.txt" us 1:3 via a,b
 	set title sprintf("$E_{1}^{R} = %.3f$ ($T = %.0f$)", ER1, T)
-	#set label 1 sprintf("$E_{1}^{I}$ = %.3e", b) left at graph 0.1,0.8
+	set label 1 sprintf("$E_{1}^{I}$ = %.3e", b) left at graph 0.05,0.7
 	pl f(x) ti "fitting curve" lc rgb "red" lw 2, \
 	 "" us 1:3 every 20 ti "data" lc rgb "navy" ps 2
 }
