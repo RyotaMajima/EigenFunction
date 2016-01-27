@@ -46,7 +46,7 @@ set fit quiet
 a = 1e-10; b = 1e-10
 fit f(x) "./output/energy_imag.txt" us 1:2 via a,b
 set title sprintf("$E_{0}^{R} = %.3f$ ($T = %.0f$)", ER0, T)
-set label 1 sprintf("$E_{0}^{I}$ = %.3e", b) left at graph 0.05,0.7
+set label 1 sprintf("$E_{0}^{I} = %.3e$", b) left at graph 0.05,0.7
 pl f(x) ti "fitting curve" lc rgb "red" lw 2, \
  "" us 1:2 every 20 ti "data" lc rgb "navy" ps 2
 

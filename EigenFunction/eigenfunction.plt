@@ -1,7 +1,7 @@
 unset multiplot; reset
 
-set ter tikz standalone size 15cm,8cm
-set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\slide\graph_slide/eigenfunction.tex'
+#set ter tikz standalone size 15cm,8cm
+#set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\slide\graph_slide/eigenfunction.tex'
 #set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/eigenfunction.tex'
 set multiplot layout 1,2
 
@@ -28,7 +28,7 @@ pl "./output/ho.txt" us 1:2 ti "$V(x)$" w l ls 1, \
 if(peakNum > 1){
 	set label 1 "(b)" left at graph 0.05,0.9
 	set ylab "$|| \\varphi_{1}(x) ||^{2}$"
-	set title sprintf("$E_{1} = %.3f - %.6f i$", ER1, abs(EI1))
+	set title sprintf("$E_{1} = %.3f - %6f i$", ER1, abs(EI1))
 	pl "./output/ho.txt" us 1:2 ti "$V(x)$" w l ls 1, \
 	 "" us 1:4 ti "" w l ls 3 dt 3, \
 	 "./output/phi.txt" index 1 ti "" w filledcur ls 3
