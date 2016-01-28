@@ -39,8 +39,10 @@ const double dt = T_END / TN; //時間刻み幅
 
 const double S = 0.9; //波束の幅
 const double X = -0.5; //初期波束の原点からのずれ
-const double b = 1.0 / 3.0; //3次ポテンシャルの係数
 const double X_OPT = X_BEGIN + 3.0 * L / 4.0; //光学ポテンシャルをかける位置
+
+const double d = 3.0; //bの分母
+const double b = 1.0 / 3.0; //3次ポテンシャルの係数
 
 //実部の範囲(WKB近似含む)
 const double E_BEGIN_real = -1.0 / (6.0 * b*b), E_END_real = 0.0;
