@@ -1,17 +1,22 @@
 unset multiplot; reset
 
+#set ter tikz standalone size 15cm,7.5cm
+#set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\thesis\graph/real.tex'
+
 load "./params.txt"
 
-set yran [0:1]
+set yran [0:0.4]
 set xlab "$\\varepsilon^{R} / \\hbar \\omega$"
 set ylab "$|| \\Phi_{T}(\\varepsilon^{R}) ||^{2}$"
+set format y "%.2f"
+set ytics 0.1
 
-set label 1 sprintf("$E_{0}^{R} = %.3f$", ER0) center at first ER0,ER0_val+0.2
-set arrow 1 from first ER0,ER0_val+0.15 to ER0,ER0_val+0.01
+set label 1 sprintf("$E_{0}^{R} = %.3f$", ER0) center at first ER0,ER0_val+0.1
+set arrow 1 from first ER0,ER0_val+0.08 to ER0,ER0_val+0.01
 
 if(peakNum > 1){
- set label 2 sprintf("$E_{1}^{R} = %.3f$", ER1) center at first ER1,ER1_val+0.2
- set arrow 2 from first ER1,ER1_val+0.15 to ER1,ER1_val+0.01
+ set label 2 sprintf("$E_{1}^{R} = %.3f$", ER1) center at first ER1,ER1_val+0.1
+ set arrow 2 from first ER1,ER1_val+0.08 to ER1,ER1_val+0.01
 }
 
 if(peakNum > 2){

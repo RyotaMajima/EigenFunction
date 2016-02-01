@@ -4,6 +4,8 @@ unset multiplot; reset
 #set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\slide\graph_slide/eigenvalue.tex'
 #set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/eigenvalue.tex'
 
+load "params.txt"
+
 set multiplot
 set size 1.0,0.4
 set origin 0.0,0.6
