@@ -15,20 +15,20 @@ V(x, b) = (1.0 / 2) * x**2 - (b / 3) * x**3 - 1 / (6*b**2)
 f(x, b) = (1.0 / 2.0)*x**2 - 1.0 / (6*b**2)
 
 set origin 0.0,0.7; set size 0.33,0.3
-set arrow 1 from first -0.9,-0.22 to 1.1,-0.22 nohead lc rgb "red" lw 2
+set arrow 1 from first -0.8,-0.22 to 1.2,-0.22 nohead lc rgb "red" lw 2
 set title "(i)"
 pl V(x, 1.0 / 2.0) ti "" ls 1, f(x, 1.0 / 2.0) ti "" ls 2
 
 set origin 0.33,0.7; set size 0.33,0.3
-set arrow 1 from first -0.9,-1.02 to 1.1,-1.02 nohead lc rgb "red" lw 2
-set arrow 2 from first -1.4,-0.165 to 2.2,-0.165 nohead lc rgb "blue" lw 2
+set arrow 1 from first -0.87,-1.02 to 1.1,-1.02 nohead lc rgb "red" lw 2
+set arrow 2 from first -1.4,-0.165 to 2.35,-0.165 nohead lc rgb "blue" lw 2
 set title "(ii)"
 pl V(x, 1.0 / 3.0) ti "" ls 1, f(x, 1.0 / 3.0) ti "" ls 2
 
 set origin 0.66,0.7; set size 0.33,0.3
 set arrow 1 from first -0.9,-2.17 to 1.1,-2.17 nohead lc rgb "red" lw 2
-set arrow 2 from first -1.5,-1.24 to 2.0,-1.24 nohead lc rgb "blue" lw 2
-set arrow 3 from first -1.9,-0.4 to 2.9,-0.4 nohead lc rgb "green" lw 2
+set arrow 2 from first -1.5,-1.24 to 2.08,-1.24 nohead lc rgb "blue" lw 2
+set arrow 3 from first -1.85,-0.4 to 3.0,-0.4 nohead lc rgb "green" lw 2
 set title "(iii)"
 pl V(x, 1.0 / 4.0) ti "" ls 1, f(x, 1.0 / 4.0) ti "" ls 2
 

@@ -21,13 +21,13 @@ set fit results
 
 b = b0
 fit f(x) "./output/decay.txt" index 0 via b
-set title sprintf("(a) $\\lambda_{0} = $%.3e", lambda0)
+set title "(a) $\\lambda_{0} = 8.616 \\times 10^{-5}$"
 pl f(x) ti "fitting curve" ls 1, "" index 0 every 5 ti "data" ls 2
 
 if(peakNum > 1){
 	b = b0
 	fit f(x) "./output/decay.txt" index 1 via b
-	set title sprintf("(b) $\\lambda_{1} = $%.3e", lambda1)
+	set title "(b) $\\lambda_{1} = 1.736 \\times 10^{-2}$"
 	pl f(x) ti "fitting curve" ls 1, "" index 1 every 5 ti "data" ls 2
 }
 

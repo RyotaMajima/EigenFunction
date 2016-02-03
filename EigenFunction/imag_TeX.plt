@@ -8,7 +8,6 @@ load "params.txt"
 set multiplot layout 1,2
 
 set xlab "$\\varepsilon^{I}$"
-set ylab "$|| \\Phi_{T}(\\varepsilon^{I}) ||^{2}$"
 set format x "$10^{%L}$"
 set logscale x
 unset mxtics
@@ -25,8 +24,8 @@ set ls 2 lc rgb "navy" ps 2
 a = 1e-10; b = 1e-10
 fit f(x) "./output/energy_imag.txt" us 1:2 via a,b
 set title sprintf("(a) $E_{0}^{R} = %.3f$ ($T = %.0f$)", ER0, T)
-set label 1 sprintf("$E_{0}^{I}$ = %.3e", b) left at graph 0.1,0.7
-set ylab "$|| \\Phi_{T}(E_{0}^{R}, \\varepsilon^{I}) ||^{2}$" \
+set label 1 "$E_{0}^{I} = 8.079 \\times 10^{-5}$" left at graph 0.1,0.7
+set ylab "$|| \\Phi_{T}'(E_{0}^{R}, \\varepsilon^{I}) ||^{2}$" \
  offset -1,0
 set ytics 0.1
 set format y "%.1f"
@@ -37,8 +36,8 @@ if(peakNum > 1){
 	a = 1e-10; b = 1e-10
 	fit f(x) "./output/energy_imag.txt" us 1:3 via a,b
 	set title sprintf("(b) $E_{1}^{R} = %.3f$ ($T = %.0f$)", ER1, T)
-	set label 1 sprintf("$E_{1}^{I}$ = %.3e", b) left at graph 0.1,0.7
-	set ylab "$|| \\Phi_{T}(E_{1}^{R}, \\varepsilon^{I}) ||^{2}$"
+	set label 1 "$E_{1}^{I} = 1.661 \\times 10^{-2}$" left at graph 0.1,0.7
+	set ylab "$|| \\Phi_{T}'(E_{1}^{R}, \\varepsilon^{I}) ||^{2}$"
 	set ytics 0.01
 	set format y "%.2f"
 	pl f(x) ti "fitting curve" ls 1, \
