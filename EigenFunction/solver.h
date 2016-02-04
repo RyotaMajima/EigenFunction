@@ -152,7 +152,7 @@ void getImagPart(vector<double> &imag, vector<double> &real){
 
     for (int i = 0; i < EN_imag; i++){
         for (int j = 0; j < real.size(); j++){
-            res[i][j] = simpson(B[i][j]) * exp(GetValueLog(E_BEGIN_imag, E_END_imag, EN_imag, i) * T_END);
+            res[i][j] = simpson(B[i][j]) *exp(GetValueLog(E_BEGIN_imag, E_END_imag, EN_imag, i) * T_END);
         }
     }
 

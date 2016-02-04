@@ -5,7 +5,7 @@ set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\thesis\graph/WKB.tex'
 set multiplot
 
 set xran [-4:5]; set yran [-3:2]
-set xlab "$x$"; set ylab "$E$"
+set xlab "$x$"; set ylab "$E^{R}$"
 set xtics 2
 set zeroaxis
 

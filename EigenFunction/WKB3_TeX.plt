@@ -10,7 +10,7 @@ set ls 1 lc rgb "black" lw 2
 set ls 2 lc rgb "black" dt (10,20)
 
 set xran [-3:1/b + 1]; set yran [-1/(6 * b*b)-1:2]
-set xlab "$x$"; set ylab "$E$"
+set xlab "$x$"; set ylab "$E^{R}$"
 #set ytics 1.0
 set zeroaxis
 set label 1 "(a)" center at graph 0.9,0.9

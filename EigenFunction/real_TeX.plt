@@ -10,7 +10,7 @@ load "./params.txt"
 set origin 0,0; set size 0.4,1.0
 
 set xran [-3:1/b + 1]; set yran [-1/(6 * b*b)-1:2]
-set xlab "$x$"; set ylab "$E$"
+set xlab "$x$"; set ylab "$E^{R}$"
 set zeroaxis
 set ytics 1
 set key right at graph 1.0,0.2

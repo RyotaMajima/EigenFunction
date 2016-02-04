@@ -37,4 +37,3 @@ unset multiplot
 set output
 set ter pop
 reset
-
