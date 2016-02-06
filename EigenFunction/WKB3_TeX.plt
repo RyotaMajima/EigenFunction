@@ -1,7 +1,8 @@
 unset multiplot; reset
 
 set ter tikz standalone size 16cm,8cm
-set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\thesis\graph/WKB3.tex'
+#set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\thesis\graph/WKB3.tex'
+set output 'C:\Users\U24E\Dropbox\TeX\thesis\thesis\graph/WKB3.tex'
 set multiplot layout 1,2
 
 load "params.txt"
@@ -11,7 +12,7 @@ set ls 2 lc rgb "black" dt (10,20)
 
 set xran [-3:1/b + 1]; set yran [-1/(6 * b*b)-1:2]
 set xlab "$x$"; set ylab "$E^{R}$"
-#set ytics 1.0
+set ytics 1.0
 set zeroaxis
 set label 1 "(a)" center at graph 0.9,0.9
 
@@ -35,7 +36,7 @@ unset arrow; unset label
 set xran [*:*]; set yran [*:*]
 set xlab "$E^{R}$"; set ylab "$E^{I}$"
 set xtics 0.4
-set ytics
+set ytics auto
 set logscale y; set format y "$10^{%L}$"
 set grid lw 2
 #set tics font ",9"

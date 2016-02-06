@@ -1,8 +1,8 @@
 unset multiplot; reset
 
 set ter tikz standalone size 15cm,8cm
-set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\slide\graph_slide/eigenfunction.tex'
-#set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/eigenfunction.tex'
+#set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\slide\graph_slide/eigenfunction.tex'
+set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/eigenfunction.tex'
 set multiplot layout 1,2
 
 load "params.txt"
