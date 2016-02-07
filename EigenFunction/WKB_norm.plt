@@ -9,7 +9,7 @@ set logscale y; unset mytics
 set format y "$10^{%L}$"
 set grid lw 2
 set ytics nomirror
-set xlab "$E^{R} / \\hbar \\omega$"; set ylab "$E^{I} / \\hbar \\omega$"
+set xlab "$E^{R}$"; set ylab "$E^{I}$"
 set tmar 2
 set tics font ",9"
 

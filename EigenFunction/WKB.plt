@@ -6,7 +6,7 @@ set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/WKB.tex'
 set multiplot
 
 set xran [-4:5]; set yran [-3.0:0.5]
-set xlab "$x$"; set ylab "$E^{R} / \\hbar \\omega$" offset -1,0
+set xlab "$x$"; set ylab "$E^{R}$" offset -1,0
 set xtics 2; set ytics 1
 set zeroaxis
 
@@ -37,13 +37,13 @@ set xran [*:*]; set yran [*:*]
 set logscale y; unset mytics
 set ytics nomirror
 set format y "$10^{%L}$"
-set xlab "$E^{R} / \\hbar \\omega$"; set ylab "$E^{I} / \\hbar \\omega$"
+set xlab "$E^{R}$"; set ylab "$E^{I}$"
 set tmar 2
 
 set ls 1 lc rgb "black"
 set ls 2 pt 1 ps 3
 
-set label 1 "from fitting" left at graph 0.2,0.1
+set label 1 "from fitting" left at graph 0.3,0.1
 set label 2 point ls 2 ps 2 lc rgb "black" at graph 0.92,0.1
 
 FIT2 = "./output/eigenValueFit2.txt"

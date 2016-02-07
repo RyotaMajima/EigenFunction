@@ -11,7 +11,7 @@ set ls 1 lc rgb "black" lw 2
 set ls 2 lc rgb "black" dt (10,20)
 
 set xran [-3:1/b + 1]; set yran [-1/(6 * b*b)-1:2]
-set xlab "$x$"; set ylab "$E^{R} / \\hbar \\omega$"
+set xlab "$x$"; set ylab "$E^{R}$"
 set ytics 1.0
 set zeroaxis
 unset key
@@ -40,7 +40,7 @@ set ytics auto
 set xtics 0.4
 unset mytics; set ytics nomirror
 set logscale y; set format y "$10^{%L}$"
-set xlab "$E^{R} / \\hbar \\omega$"; set ylab "$E^{I} / \\hbar \\omega$"
+set xlab "$E^{R}$"; set ylab "$E^{I}$"
 
 set ls 1 pt 1 ps 3
 
