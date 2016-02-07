@@ -7,7 +7,7 @@ set multiplot layout 1,2
 
 load "params.txt"
 
-set ls 1 lc rgb "black" lw 2
+set ls 1 lc rgb "black" lw 3
 set ls 2 lc rgb "black" dt (10,20)
 
 set xran [-3:1/b + 1]; set yran [-1/(6 * b*b)-1:2]
@@ -16,10 +16,10 @@ set ytics 1.0
 set zeroaxis
 unset key
 
-set arrow 1 from first -0.9,ER0 to 1.1,ER0 nohead lc rgb "red" lw 2
+set arrow 1 from first -0.9,ER0 to 1.1,ER0 nohead lc rgb "red" lw 3
 
 if(peakNum > 1){
-	set arrow 2 from first -1.4,ER1 to 2.35,ER1 nohead lc rgb "blue" lw 2
+	set arrow 2 from first -1.4,ER1 to 2.35,ER1 nohead lc rgb "blue" lw 3
 }
 
 if(peakNum > 2){
@@ -35,14 +35,13 @@ pl V(x) ti "$V(x)$" ls 1,\
 unset arrow
 set xran [*:*]; set yran [*:*]
 set grid lw 2
-set tics font ",9"
 set ytics auto
 set xtics 0.4
 unset mytics; set ytics nomirror
 set logscale y; set format y "$10^{%L}$"
 set xlab "$E^{R}$"; set ylab "$E^{I}$"
 
-set ls 1 pt 1 ps 3
+set ls 1 pt 1 ps 4
 
 FIT = "./output/eigenValueFit3.txt"
 
@@ -56,7 +55,7 @@ if(peakNum == 1){
 if(peakNum == 2){
 	pl FIT us 1:(abs($2)) every ::0::0 ti ""  w p ls 1 lc rgb "red", \
 	 FIT every ::1::1 ti ""  w p ls 1 lc rgb "blue", \
-	 "./output/WKB3.txt" ti "" w l lc rgb "black"
+	 "./output/WKB3.txt" ti "" w l lc rgb "black" lw 2
 }
 if(peakNum == 3){
 	pl FIT us 1:(abs($2)) every ::0::0 ti ""  w p ls 1 lc rgb "red", \
