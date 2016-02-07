@@ -6,7 +6,7 @@ set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/WKB.tex'
 set multiplot
 
 set xran [-4:5]; set yran [-3.0:0.5]
-set xlab "$x$"; set ylab "$E^{R}$" offset -1,0
+set xlab "$x$"; set ylab "$E^{R} / \\hbar \\omega$" offset -1,0
 set xtics 2; set ytics 1
 set zeroaxis
 
@@ -37,7 +37,7 @@ set xran [*:*]; set yran [*:*]
 set logscale y; unset mytics
 set ytics nomirror
 set format y "$10^{%L}$"
-set xlab "$E^{R}$"; set ylab "$E^{I}$"
+set xlab "$E^{R} / \\hbar \\omega$"; set ylab "$E^{I} / \\hbar \\omega$"
 set tmar 2
 
 set ls 1 lc rgb "black"

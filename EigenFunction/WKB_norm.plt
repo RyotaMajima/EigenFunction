@@ -1,15 +1,15 @@
 unset multiplot; reset
 
-#set ter tikz stand size 15cm,10cm
+set ter tikz stand size 15cm,10cm
 #set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\slide\graph_slide/WKB_norm.tex'
-#set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/WKB.tex'
+set output 'C:\Users\U24E\Dropbox\TeX\thesis\slide\graph_slide/WKB_norm.tex'
 set multiplot layout 1,3
 
 set logscale y; unset mytics
 set format y "$10^{%L}$"
 set grid lw 2
 set ytics nomirror
-set xlab "$E / \\hbar \\omega$"; set ylab "$\\tau^{-1}$"
+set xlab "$E^{R} / \\hbar \\omega$"; set ylab "$E^{I} / \\hbar \\omega$"
 set tmar 2
 set tics font ",9"
 

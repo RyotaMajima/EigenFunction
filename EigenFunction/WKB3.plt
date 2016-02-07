@@ -40,7 +40,7 @@ set ytics auto
 set xtics 0.4
 unset mytics; set ytics nomirror
 set logscale y; set format y "$10^{%L}$"
-set xlab "$E^{R} / \\hbar \\omega$"; set ylab "$E^{I}$"
+set xlab "$E^{R} / \\hbar \\omega$"; set ylab "$E^{I} / \\hbar \\omega$"
 
 set ls 1 pt 1 ps 3
 
