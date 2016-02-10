@@ -23,7 +23,7 @@ set ls 2 lc rgb "navy" ps 2
 
 a = 1e-10; b = 1e-10
 fit f(x) "./output/energy_imag1.txt" us 1:2 via a,b
-set ylab "$|| \\Phi_{T}'(E_{0}^{R}, \\varepsilon^{I}) ||^{2}$" \
+set ylab "$\\| \\Phi_{T}'(E_{0}^{R}, \\varepsilon^{I}) \\|^{2}$" \
  offset -1,0
 set ytics 0.1
 set format y "%.1f"
@@ -34,7 +34,7 @@ pl f(x) ti "fitting curve" ls 1, \
 if(peakNum > 1){
 	a = 1e-10; b = 1e-10
 	fit f(x) "./output/energy_imag1.txt" us 1:3 via a,b
-	set ylab "$|| \\Phi_{T}'(E_{1}^{R}, \\varepsilon^{I}) ||^{2}$"
+	set ylab "$\\| \\Phi_{T}'(E_{1}^{R}, \\varepsilon^{I}) \\|^{2}$"
 	set ytics 0.02
 	set format y "%.2f"
 	set title sprintf("$E_{1}^{I} = $ %.3e", b)
@@ -54,7 +54,7 @@ set ls 2 lc rgb "navy" ps 2
 
 a = 1e-10; b = 1e-10
 fit f(x) "./output/energy_imag.txt" us 1:2 via a,b
-set ylab "$|| \\Phi_{T}'(E_{0}^{R}, \\varepsilon^{I}) ||^{2} e^{\\varepsilon^{I} T}$" \
+set ylab "$\\| \\Phi_{T}'(E_{0}^{R}, \\varepsilon^{I}) \\|^{2} e^{\\varepsilon^{I} T}$" \
  offset -1,0
 set ytics 0.2
 set format y "%.1f"
@@ -65,7 +65,7 @@ pl f(x) ti "fitting curve" ls 1, \
 if(peakNum > 1){
 	a = 1e-10; b = 1e-10
 	fit f(x) "./output/energy_imag.txt" us 1:3 via a,b
-	set ylab "$|| \\Phi_{T}'(E_{1}^{R}, \\varepsilon^{I}) ||^{2} e^{\\varepsilon^{I} T}$"
+	set ylab "$\\| \\Phi_{T}'(E_{1}^{R}, \\varepsilon^{I}) \\|^{2} e^{\\varepsilon^{I} T}$"
 	set ytics 0.01
 	set format y "%.2f"
 	set title sprintf("$E_{1}^{I} = $ %.3e", b)
@@ -85,7 +85,7 @@ set ls 2 lc rgb "navy" ps 2
 
 a = 1e-10; b = 1e-10
 fit f(x) "./output/energy_imag2.txt" us 1:2 via a,b
-set ylab "$|| \\Phi_{T}'(E_{0}^{R}, \\varepsilon^{I}) ||^{2} e^{2\\varepsilon^{I} T}$" \
+set ylab "$\\| \\Phi_{T}'(E_{0}^{R}, \\varepsilon^{I}) \\|^{2} e^{2\\varepsilon^{I} T}$" \
  offset -1,0
 set ytics 10.0
 set format y "%.1f"
@@ -96,7 +96,7 @@ pl f(x) ti "fitting curve" ls 1, \
 if(peakNum > 1){
 	a = 1e-10; b = 1e-10
 	fit f(x) "./output/energy_imag2.txt" us 1:3 via a,b
-	set ylab "$|| \\Phi_{T}'(E_{1}^{R}, \\varepsilon^{I}) ||^{2} e^{2\\varepsilon^{I} T}$"
+	set ylab "$\\| \\Phi_{T}'(E_{1}^{R}, \\varepsilon^{I}) \\|^{2} e^{2\\varepsilon^{I} T}$"
 	set ytics 1.0
 	set format y "%.1f"
 	set title sprintf("$E_{1}^{I} = $ %.3e", b)

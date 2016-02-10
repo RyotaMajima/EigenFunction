@@ -1,7 +1,7 @@
 unset multiplot; reset
 
-#set ter tikz standalone size 16cm,8cm
-#set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\thesis\graph/phi.tex'
+set ter tikz standalone size 16cm,8cm
+set output 'C:\Users\sigmajima\Dropbox\TeX\thesis\thesis\graph/phi.tex'
 set multiplot layout 1,2
 
 load "params.txt"
@@ -18,7 +18,7 @@ set linestyle 3 lc rgb "blue" lw 2
 set style fill transpa solid 0.5 noborder
 
 set label 1 "(a)" left at graph 0.05,0.9
-set ylab "$|| \\varphi_{0}(x) ||^{2}$"
+set ylab "$\\| \\varphi_{0}(x) \\|^{2}$"
 set title sprintf("$E_{0} = %.3f - %.8f i$", ER0, abs(EI0))
 pl "./output/ho.txt" us 1:2 ti "$V(x)$" w l ls 1, \
  "" us 1:3 ti "" w l ls 2 dt 3, \
@@ -26,7 +26,7 @@ pl "./output/ho.txt" us 1:2 ti "$V(x)$" w l ls 1, \
 
 if(peakNum > 1){
 	set label 1 "(b)" left at graph 0.05,0.9
-	set ylab "$|| \\varphi_{1}(x) ||^{2}$"
+	set ylab "$\\| \\varphi_{1}(x) \\|^{2}$"
 	set title sprintf("$E_{1} = %.3f - %6f i$", ER1, abs(EI1))
 	pl "./output/ho.txt" us 1:2 ti "$V(x)$" w l ls 1, \
 	 "" us 1:4 ti "" w l ls 3 dt 3, \

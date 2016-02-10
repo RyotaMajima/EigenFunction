@@ -25,7 +25,7 @@ a = 1e-10; b = 1e-10
 fit f(x) "./output/energy_imag.txt" us 1:2 via a,b
 set title sprintf("(a) $E_{0}^{R} = %.3f$ ($T = %.0f$)", ER0, T)
 set label 1 "$E_{0}^{I} = 8.079 \\times 10^{-5}$" left at graph 0.1,0.7
-set ylab "$|| \\Phi_{T}'(E_{0}^{R}, \\varepsilon^{I}) ||^{2}$" \
+set ylab "$\\| \\Phi_{T}'(E_{0}^{R}, \\varepsilon^{I}) \\|^{2} e^{\\varepsilon^{I} T}$" \
  offset -1,0
 set ytics 0.1
 set format y "%.1f"
@@ -37,7 +37,7 @@ if(peakNum > 1){
 	fit f(x) "./output/energy_imag.txt" us 1:3 via a,b
 	set title sprintf("(b) $E_{1}^{R} = %.3f$ ($T = %.0f$)", ER1, T)
 	set label 1 "$E_{1}^{I} = 1.661 \\times 10^{-2}$" left at graph 0.1,0.7
-	set ylab "$|| \\Phi_{T}'(E_{1}^{R}, \\varepsilon^{I}) ||^{2}$"
+	set ylab "$\\| \\Phi_{T}'(E_{1}^{R}, \\varepsilon^{I}) \\|^{2} e^{\\varepsilon^{I} T}$"
 	set ytics 0.01
 	set format y "%.2f"
 	pl f(x) ti "fitting curve" ls 1, \

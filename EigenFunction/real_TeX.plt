@@ -32,7 +32,7 @@ set origin 0.4,0; set size 0.6,1.0
 
 set xran [*:*]; set yran [0:0.4]
 set xlab "$\\varepsilon^{R}$"
-set ylab "$|| \\Phi_{T}(\\varepsilon^{R}) ||^{2}$"
+set ylab "$\\| \\Phi_{T}(\\varepsilon^{R}) \\|^{2}$"
 set format y "%.1f"
 set ytics 0.1
 

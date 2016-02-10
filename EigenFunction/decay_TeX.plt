@@ -9,7 +9,7 @@ load "params.txt"
 
 set grid lw 2
 set xran [0:T]; set yran [0:1]
-set xlab "$t$"; set ylab "$|| \\Psi(t) ||^{2}$"
+set xlab "$t$"; set ylab "$\\| \\Psi(t) \\|^{2}$"
 set key spacing 2
 set key right at graph 0.95,0.85
 
